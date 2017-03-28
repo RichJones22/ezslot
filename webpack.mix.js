@@ -14,12 +14,30 @@ var path = require('path');
 
 mix
     /*
+     * Laravel Spark
+     */
+    .less('resources/assets/less/app.less', 'public/css')
+    .copy('node_modules/sweetalert/dist/sweetalert.min.js', 'public/js/sweetalert.min.js')
+    .copy('node_modules/sweetalert/dist/sweetalert.css', 'public/css/sweetalert.css')
+    .js('resources/assets/js/app.js', 'public/js')
+    .webpackConfig({
+        resolve: {
+            modules: [
+                path.resolve(__dirname, 'vendor/laravel/spark/resources/assets/js'),
+                'node_modules'
+            ],
+            alias: {
+                'vue$': 'vue/dist/vue.js'
+            }
+        }
+    })
+    /*
      * ezSlot
      */
     // build app.js, which contains Node and Vue js code
     .js(
         [
-            './resources/assets/js/app.js'
+            './resources/assets/js/ezSlot.js'
         ], 'public/js/ezSlot.js')
     // combine app.js with all other none Node and none Vue js code.
     // note: .scripts will work as well.
@@ -47,24 +65,8 @@ mix
     // having an issue with my .combine technique above; I get two app.js files and
     // .version()
     .sass('./resources/assets/sass/app.scss', 'css/ezSlot.css')
-    /*
-     * Laravel Spark
-     */
-    .less('resources/assets/less/app.less', 'public/css')
-    .copy('node_modules/sweetalert/dist/sweetalert.min.js', 'public/js/sweetalert.min.js')
-    .copy('node_modules/sweetalert/dist/sweetalert.css', 'public/css/sweetalert.css')
-    .js('resources/assets/js/app.js', 'public/js')
-    .webpackConfig({
-        resolve: {
-            modules: [
-                path.resolve(__dirname, 'vendor/laravel/spark/resources/assets/js'),
-                'node_modules'
-            ],
-            alias: {
-                'vue$': 'vue/dist/vue.js'
-            }
-        }
-    });
+
+;
 
 // Full API
 // mix.js(src, output);
