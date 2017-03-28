@@ -11,7 +11,7 @@
 
     <title>ezSlot</title>
 
-    <link href="{{mix('css/app.css')}}" rel="stylesheet">
+    <link href="{{mix('css/ezSlot.css')}}" rel="stylesheet">
 
 </head>
 
@@ -252,7 +252,7 @@
     </a>
 </div>
 
-<script src="{{mix('js/app.js')}}"></script>
+<script src="{{mix('js/ezSlot.js')}}"></script>
 </body>
 
 </html>
