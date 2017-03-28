@@ -41,10 +41,10 @@
                     <a href="#contact">Alerts</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="/login">Login</a>
+                    <a href="{{ url('/login') }}">Login</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="/register">Register</a>
+                    <a href="{{ url('/register') }}">Register</a>
                 </li>
             </ul>
         </div>
