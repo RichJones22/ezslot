@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="row">
-            <vue-closed-trades></vue-closed-trades>
+            {{--<vue-closed-trades></vue-closed-trades>--}}
             <div class="container">
                 <h2>Basic Table</h2>
                 <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
