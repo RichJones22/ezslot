@@ -29,11 +29,11 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
-Vue.http.interceptors.push((request, next) => {
-    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
-
-    next();
-});
+// Vue.http.interceptors.push((request, next) => {
+//     request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+//
+//     next();
+// });
 
 // window.axios.defaults.headers.common = {
 //     'X-CSRF-TOKEN': window.Laravel.csrfToken,
