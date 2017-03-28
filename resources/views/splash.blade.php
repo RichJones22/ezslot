@@ -11,7 +11,7 @@
 
     <title>ezSlot</title>
 
-    <link href="{{mix('css/app.css')}}" rel="stylesheet">
+    <link href="{{mix('css/ezSlot.css')}}" rel="stylesheet">
 
 </head>
 
@@ -41,10 +41,10 @@
                     <a href="#contact">Alerts</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="/login">Login</a>
+                    <a href="{{ url('/login') }}">Login</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="/register">Register</a>
+                    <a href="{{ url('/register') }}">Register</a>
                 </li>
             </ul>
         </div>
@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="row">
-            <vue-closed-trades></vue-closed-trades>
+            {{--<vue-closed-trades></vue-closed-trades>--}}
             <div class="container">
                 <h2>Basic Table</h2>
                 <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
@@ -252,7 +252,7 @@
     </a>
 </div>
 
-<script src="{{mix('js/app.js')}}"></script>
+<script src="{{mix('js/ezSlot.js')}}"></script>
 </body>
 
 </html>
