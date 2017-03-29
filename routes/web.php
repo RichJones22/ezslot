@@ -16,7 +16,5 @@ Route::get('/', function () {
     return view('splash');
 });
 
-//Route::get('/', 'WelcomeController@show');
-//
 Route::get('/home', 'HomeController@show');
 
