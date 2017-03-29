@@ -38,7 +38,7 @@ mix
     .js(
         [
             './resources/assets/js/ezSlot.js'
-        ], 'public/js/ezSlot.js')
+        ], 'public/js/tmp/ezSlot.js')
     // combine app.js with all other none Node and none Vue js code.
     // note: .scripts will work as well.
     // note: - replace .combine with .babel if running 'npm run production' to minify; seems to work better
@@ -47,7 +47,7 @@ mix
         [
             './resources/assets/js/vendor/rateGeniusNS.js',
             './resources/assets/js/vendor/testFile.js',
-            'public/js/ezSlot.js',
+            'public/js/tmp/ezSlot.js',
             './resources/assets/js/vendor/startbootstrap-freelancer/js/freelancer.js',
         ], 'public/js/ezSlot.js')
     // .extract creates the vendor.js and manifest.js; used for long term caching of vendor js
