@@ -6,12 +6,14 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "laravel/cashier": "~7.0",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0",
         "laravel/spark": "~4.0",
-        "laravel/cashier": "~7.0"
+        "laravel/tinker": "~1.0",
+        "premise/utilities": "dev-master"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.3",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.7"
@@ -36,13 +38,22 @@
         "post-create-project-cmd": [
             "php artisan key:generate"
         ],
+        "app_setup": [
+            "php artisan clear-compiled",
+            "php artisan cache:clear",
+            "php artisan view:clear",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
+            "php artisan optimize",
+            "composer dumpautoload"
+        ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "@app_setup"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "@app_setup"
         ]
     },
     "config": {
