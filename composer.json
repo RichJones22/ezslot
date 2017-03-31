@@ -42,6 +42,8 @@
             "php artisan clear-compiled",
             "php artisan cache:clear",
             "php artisan view:clear",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
             "php artisan optimize",
             "composer dumpautoload -o"
         ],

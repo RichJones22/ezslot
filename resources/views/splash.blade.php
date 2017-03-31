@@ -11,15 +11,32 @@
 
     <title>ezSlot</title>
 
+    {{--<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
     <link href="{{mix('css/ezSlot.css')}}" rel="stylesheet">
 
-</head>
 
+
+</head>
+<style>
+    .bg-table {
+        background-color: gray;
+    }
+    .m-table {
+        padding: 2rem;
+        border: hidden;
+        border-radius: 3rem;
+        background-color: #a2a2a2;
+    }
+    .app-nav {
+        padding-bottom: 20px;
+    }
+</style>
 <body id="page-top" class="index">
 
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-    <div class="container">
+    <div class="container app-nav">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -78,112 +95,8 @@
             </div>
         </div>
         <div class="row">
-            <vue-closed-trades></vue-closed-trades>
-            {{--<div class="container">--}}
-                {{--<h2>Basic Table</h2>--}}
-                {{--<p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>--}}
-                {{--<table class="table">--}}
-                    {{--<thead>--}}
-                    {{--<tr>--}}
-                        {{--<th>Firstname</th>--}}
-                        {{--<th>Lastname</th>--}}
-                        {{--<th>Email</th>--}}
-                    {{--</tr>--}}
-                    {{--</thead>--}}
-                    {{--<tbody>--}}
-                    {{--<tr>--}}
-                        {{--<td>John</td>--}}
-                        {{--<td>Doe</td>--}}
-                        {{--<td>john@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Mary</td>--}}
-                        {{--<td>Moe</td>--}}
-                        {{--<td>mary@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>July</td>--}}
-                        {{--<td>Dooley</td>--}}
-                        {{--<td>july@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>John</td>--}}
-                        {{--<td>Doe</td>--}}
-                        {{--<td>john@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Mary</td>--}}
-                        {{--<td>Moe</td>--}}
-                        {{--<td>mary@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>July</td>--}}
-                        {{--<td>Dooley</td>--}}
-                        {{--<td>july@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>John</td>--}}
-                        {{--<td>Doe</td>--}}
-                        {{--<td>john@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Mary</td>--}}
-                        {{--<td>Moe</td>--}}
-                        {{--<td>mary@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>July</td>--}}
-                        {{--<td>Dooley</td>--}}
-                        {{--<td>july@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>John</td>--}}
-                        {{--<td>Doe</td>--}}
-                        {{--<td>john@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Mary</td>--}}
-                        {{--<td>Moe</td>--}}
-                        {{--<td>mary@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>July</td>--}}
-                        {{--<td>Dooley</td>--}}
-                        {{--<td>july@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>John</td>--}}
-                        {{--<td>Doe</td>--}}
-                        {{--<td>john@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Mary</td>--}}
-                        {{--<td>Moe</td>--}}
-                        {{--<td>mary@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>July</td>--}}
-                        {{--<td>Dooley</td>--}}
-                        {{--<td>july@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>John</td>--}}
-                        {{--<td>Doe</td>--}}
-                        {{--<td>john@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Mary</td>--}}
-                        {{--<td>Moe</td>--}}
-                        {{--<td>mary@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>July</td>--}}
-                        {{--<td>Dooley</td>--}}
-                        {{--<td>july@example.com</td>--}}
-                    {{--</tr>--}}
-                    {{--</tbody>--}}
-                {{--</table>--}}
-            {{--</div>--}}
+            {{--<vue-closed-trades></vue-closed-trades>--}}
+            <vue-closed-trades2></vue-closed-trades2>
         </div>
     </div>
 </section>
@@ -253,6 +166,20 @@
 </div>
 
 <script src="{{mix('js/ezSlot.js')}}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+
+
+
+
+<script>
+    console.log('im here');
+
+
+
+
+</script>
+
 </body>
 
 </html>
