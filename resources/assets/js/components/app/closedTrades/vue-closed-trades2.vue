@@ -20,10 +20,6 @@
 </style>
 <script>
     export default {
-//        data(){
-//            return{
-//            }
-//        },
         mounted() {
             console.log('vue-closed-trades2 Component is  ready.');
 
@@ -36,7 +32,7 @@
 
                     let dataSet = [];
 
-                    // dataTable want to process an array of arrays; we get array of objects; so we need to convert.
+                    // dataTable wants to process an array of arrays; we get array of objects; so we need to convert.
                     for(let i=0;i<response.data.length; i++){
                         let data1 = [];
                         data1.push(response.data[i].close_date);
@@ -57,7 +53,7 @@
                         // print, copy and excel buttons
                         dom: 'lftiprB',
                         buttons: [
-                            'print','copy', 'excel'
+                            'print','copy', 'excel', 'csv'
                         ],
                         // display totals in the footer row.
                         "footerCallback": function ( row, data, start, end, display ) {

@@ -16,20 +16,6 @@
 
 
 </head>
-<style>
-    .bg-table {
-        background-color: gray;
-    }
-    .m-table {
-        padding: 2rem;
-        border: hidden;
-        border-radius: 3rem;
-        background-color: #a2a2a2;
-    }
-    .app-nav {
-        padding-bottom: 20px;
-    }
-</style>
 <body id="page-top" class="index">
 
 <!-- Navigation -->
