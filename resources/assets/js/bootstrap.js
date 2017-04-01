@@ -68,7 +68,7 @@ window.axios = require('axios');
 // once all the namespaces have been built and the document is ready, load these guys
 // note: - see webpack.mix.js for order in which the js code is built.
 $(document).ready(function() {
-    // rgNS.example.addons.Logging();
-    rgNS.freelancer.easing();
+    // ezsNS.example.addons.Logging();
+    ezsNS.freelancer.easing();
 });
 

@@ -30,7 +30,7 @@
             let self = this;
 
             // start spinner
-            rgNS.ezSlot.utils.spinner.spinnerById('example');
+            ezsNS.ezSlot.utils.spinner.spinnerById('example');
             axios.get('/api/closedSymbols')
                 .then(function (response) {
 
@@ -89,12 +89,12 @@
 
                             // Update footer
                             $( api.column( 2 ).footer() ).html(
-                                'Page Total: '+ rgNS.ezSlot.utils.displayCurrency(pageTotal,2) + ' -- Grand Total '+ rgNS.ezSlot.utils.displayCurrency(total,2)
+                                'Page Total: '+ ezsNS.ezSlot.utils.displayCurrency(pageTotal,2) + ' -- Grand Total '+ ezsNS.ezSlot.utils.displayCurrency(total,2)
                             );
                         }
                     });
                     //stop spinner
-                    rgNS.ezSlot.utils.spinner.spinnerByIdStop();
+                    ezsNS.ezSlot.utils.spinner.spinnerByIdStop();
                 });
         }
     }
