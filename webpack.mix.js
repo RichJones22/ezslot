@@ -46,7 +46,7 @@ mix
     .combine(
         [
             './resources/assets/js/vendor/rateGeniusNS.js',
-            // './resources/assets/js/vendor/testFile.js',
+            './resources/assets/js/vendor/ezSlotUtils.js',
             'public/js/ezSlot.js',
             './resources/assets/js/vendor/startbootstrap-freelancer/js/freelancer.js',
         ], 'public/js/ezSlot.js')
