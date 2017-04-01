@@ -29,22 +29,24 @@
 
             let self = this;
 
+            // start spinner
+            rgNS.ezSlot.utils.spinner.spinnerById('example');
             axios.get('/api/closedSymbols')
                 .then(function (response) {
-                    self.skills = response.data;
 
                     let dataSet = [];
 
-                    for(let i=0;i<self.skills.length; i++){
+                    // dataTable want to process an array of arrays; we get array of objects; so we need to convert.
+                    for(let i=0;i<response.data.length; i++){
                         let data1 = [];
-                        data1.push(self.skills[i].close_date);
-                        data1.push(self.skills[i].underlier_symbol);
-                        data1.push(self.skills[i].profits);
+                        data1.push(response.data[i].close_date);
+                        data1.push(response.data[i].underlier_symbol);
+                        data1.push(response.data[i].profits);
 
                         dataSet.push(data1);
                     }
 
-                    let table = $("#example").dataTable({
+                    $("#example").dataTable({
                         // data and table columns
                         data: dataSet,
                         columns: [
@@ -87,23 +89,13 @@
 
                             // Update footer
                             $( api.column( 2 ).footer() ).html(
-                                'Page Total: '+ rgNS.ezSlot.utils.displayNumber(pageTotal,2) + ' -- Grand Total '+ rgNS.ezSlot.utils.displayNumber(total,2)
+                                'Page Total: '+ rgNS.ezSlot.utils.displayCurrency(pageTotal,2) + ' -- Grand Total '+ rgNS.ezSlot.utils.displayCurrency(total,2)
                             );
                         }
                     });
+                    //stop spinner
+                    rgNS.ezSlot.utils.spinner.spinnerByIdStop();
                 });
-        },
-
-        computed: {
-            runningTotal: function () {
-                if (this.skills.length > 0) {
-                    return this.skills.reduce(function(prev, elem){
-                        return prev + elem.profits;
-                    },0);
-                } else {
-                    return 0;
-                }
-            }
         }
     }
 </script>
