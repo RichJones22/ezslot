@@ -1,11 +1,11 @@
 /*
- example file to test out rgNS
+ example file to test out ezsNS
 
  file name: ezSlotUtils.js
  */
 
-rgNS.namespace('ezSlot.utils');
-rgNS.ezSlot.utils = {
+ezsNS.namespace('ezSlot.utils');
+ezsNS.ezSlot.utils = {
     round: function (number, precision) {
         let factor = Math.pow(10, precision);
         let tempNumber = number * factor;
@@ -16,7 +16,7 @@ rgNS.ezSlot.utils = {
         return "$" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     },
     displayCurrency: function(num, precision) {
-        return rgNS.ezSlot.utils.currencyFormat(rgNS.ezSlot.utils.round(num, precision));
+        return ezsNS.ezSlot.utils.currencyFormat(ezsNS.ezSlot.utils.round(num, precision));
     },
     spinnerById: function(elId, options) {
 
@@ -54,13 +54,13 @@ rgNS.ezSlot.utils = {
             }
 
             // http://spin.js.org/ for more options details; also see spin.js in this project.
-            rgNS.ezSlot.utils.spinner.spinnerInst =  new Spinner(options).spin(target);
+            ezsNS.ezSlot.utils.spinner.spinnerInst =  new Spinner(options).spin(target);
 
-            return rgNS.ezSlot.utils.spinner.spinnerInst;
+            return ezsNS.ezSlot.utils.spinner.spinnerInst;
         },
         spinnerByIdStop: function() {
-            if (rgNS.ezSlot.utils.spinner.spinnerInst !== null) {
-                rgNS.ezSlot.utils.spinner.spinnerInst.stop();
+            if (ezsNS.ezSlot.utils.spinner.spinnerInst !== null) {
+                ezsNS.ezSlot.utils.spinner.spinnerInst.stop();
             }
         }
     }
