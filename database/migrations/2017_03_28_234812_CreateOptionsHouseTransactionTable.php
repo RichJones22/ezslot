@@ -15,7 +15,7 @@ class CreateOptionsHouseTransactionTable extends Migration
     {
         Schema::create('options_house_transaction', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('transaction_id');
+            $table->bigInteger('transaction_id')->unique();
             $table->date('close_date');
             $table->time('close_time');
             $table->string('trade_type');
