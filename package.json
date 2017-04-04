@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.15.2",
+    "bootlint": "^0.14.2",
     "bootstrap": "^3.0.0",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
