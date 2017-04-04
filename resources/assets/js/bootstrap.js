@@ -8,10 +8,18 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('jquery');
-
+//
 require('bootstrap-sass');
 require('font-awesome/css/font-awesome.css');
 require('jquery.easing');
+// require('datatables.net');
+// require('datatables.net-bs');
+// require('datatables.net-buttons');
+// require('datatables.net-buttons-bs');
+// require('datatables.net-responsive');
+// require('datatables.net-responsive-bs');
+// require( 'datatables.net-buttons/js/buttons.html5.js' );
+// require('datatables.net-jqui');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -60,7 +68,7 @@ window.axios = require('axios');
 // once all the namespaces have been built and the document is ready, load these guys
 // note: - see webpack.mix.js for order in which the js code is built.
 $(document).ready(function() {
-    // rgNS.example.addons.Logging();
-    rgNS.freelancer.easing();
+    // ezsNS.example.addons.Logging();
+    ezsNS.freelancer.easing();
 });
 
