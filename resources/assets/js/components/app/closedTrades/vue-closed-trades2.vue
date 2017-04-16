@@ -46,9 +46,12 @@
                         // data and table columns
                         data: dataSet,
                         columns: [
-                            { title: "Trade Date" },
+                            { title: "Trade Date"},
                             { title: "Symbol" },
                             { title: "Profits" },
+                        ],
+                        order: [
+                          [0, "desc" ]
                         ],
                         // print, copy and excel buttons
                         dom: 'lftiprB',
@@ -91,7 +94,9 @@
                     });
                     //stop spinner
                     ezsNS.ezSlot.utils.spinner.spinnerByIdStop();
-                });
+                }).catch(function (error) {
+                    console.log(error);
+            });
         }
     }
 </script>

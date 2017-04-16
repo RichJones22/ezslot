@@ -71,7 +71,7 @@ class GetOptionsHouseActivity extends Command
             // derive transactions array per file.
             $transactions = $this->createTransactionsArray($file);
             if (empty($transactions)) {
-                return $this;
+                continue;
             }
 
             // persist transactions to db.

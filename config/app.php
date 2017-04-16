@@ -180,6 +180,8 @@ return [
         Laravel\Cashier\CashierServiceProvider::class,
         App\Providers\SparkServiceProvider::class,
 
+        \App\Providers\ezSlotServiceProvider::class,
+
     ],
 
     /*
