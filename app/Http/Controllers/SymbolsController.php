@@ -1,9 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Services\SymbolsS;
-use Illuminate\Support\Collection;
+use App\Contracts\Services\SymbolsSContract;
 
 /**
  * Class SymbolsController.
@@ -15,43 +16,15 @@ class SymbolsController extends Controller
     /**
      * SymbolsController constructor.
      *
-     * @param SymbolsS $symbolService
+     * @param SymbolsSContract $symbolsS
      */
-    public function __construct(SymbolsS $symbolService)
+    public function __construct(SymbolsSContract $symbolsS)
     {
-        $this->symbolService = $symbolService;
+        $this->symbolService = $symbolsS;
     }
 
-    /**
-     * @return array
-     */
-    public function symbolsUnique()
+    public function testSymbols()
     {
-        $symbolCollection = $this->symbolService->symbolsUnique();
-
-        // convert the collection to an array
-        return $this->convertToJsonableType($symbolCollection);
-    }
-
-    /**
-     * @param Collection $transactionCollection
-     *
-     * @return array
-     */
-    protected function convertToJsonableType(collection $transactionCollection): array
-    {
-        $data = [];
-
-        $transactions = $transactionCollection->all();
-
-        foreach ($transactions as $transaction) {
-            $tmp = [];
-            $tmp['text'] = $transaction->underlier_symbol;
-            $tmp['value'] = $transaction->underlier_symbol;
-
-            $data[] = $tmp;
-        }
-
-        return $data;
+        $helpMe = null;
     }
 }
