@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Contracts\Repositories\SymbolsRContract;
 use App\OptionsHouseTransaction;
+use DB;
 use Illuminate\Support\Collection;
 
 /**
@@ -43,5 +44,20 @@ class SymbolsR extends BaseRepository implements SymbolsRContract
         ;
 
         return $this->hydrateEntity($collection);
+    }
+
+    public function rowExistsByUnderlierSymbol(SymbolsE $symbolsE)
+    {
+        $counts = $this->getModel()
+            ->newQuery()
+            ->select(DB::raw('count(*) as count'))
+            ->where('underlier_symbol', $symbolsE->getUnderlierSymbol())
+            ->get();
+
+        foreach ($counts as $count) {
+            return $count->count;
+        }
+
+        return false;
     }
 }

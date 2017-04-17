@@ -6,7 +6,9 @@ namespace App\Services;
 
 use App\Contracts\Repositories\SymbolsRContract;
 use App\Contracts\Services\SymbolsSContract;
+use App\Repositories\SymbolsE;
 use App\Repositories\SymbolsR;
+use App\SymbolsM;
 use Illuminate\Support\Collection;
 
 /**
@@ -18,16 +20,25 @@ class SymbolsS implements SymbolsSContract
      * @var SymbolsRContract
      */
     private $symbolsR;
+    /**
+     * @var SymbolsM
+     */
+    private $symbolsM;
 
     /**
      * SymbolsS constructor.
      *
      * @param SymbolsR $symbolsR
+     * @param SymbolsM $symbolsM
      */
     public function __construct(
-        SymbolsR $symbolsR
+        SymbolsR $symbolsR,
+        SymbolsM $symbolsM // TODO:  SymbolsR should not be using OptionsHouseTransaction a a model.
+                           // TODO:  We need to finish the TransactionsR.  This would would then be used by this
+                           // TODO:  service... Need to to this next!
     ) {
         $this->setSymbolsR($symbolsR);
+        $this->setSymbolsM($symbolsM);
     }
 
     /**
@@ -43,7 +54,19 @@ class SymbolsS implements SymbolsSContract
 
     public function populateSymbolsTable()
     {
-        $helpMe = null;
+        /** @var SymbolsR $repo */
+        $repo = $this->getSymbolsR();
+        $allSymbols = $repo->symbolsUnique();
+
+        // switch model to symbols model.
+        $repo->setModel($this->getSymbolsM());
+
+        /** @var SymbolsE $symbol */
+        foreach ($allSymbols as $symbol) {
+            if ( ! $repo->rowExistsByUnderlierSymbol($symbol)) {
+                $repo->persistEntity($symbol);
+            }
+        }
     }
 
     /**
@@ -62,6 +85,26 @@ class SymbolsS implements SymbolsSContract
     public function setSymbolsR(SymbolsRContract $symbolsR): SymbolsS
     {
         $this->symbolsR = $symbolsR;
+
+        return $this;
+    }
+
+    /**
+     * @return SymbolsM
+     */
+    public function getSymbolsM(): SymbolsM
+    {
+        return $this->symbolsM;
+    }
+
+    /**
+     * @param SymbolsM $symbolsM
+     *
+     * @return SymbolsS
+     */
+    public function setSymbolsM(SymbolsM $symbolsM): SymbolsS
+    {
+        $this->symbolsM = $symbolsM;
 
         return $this;
     }

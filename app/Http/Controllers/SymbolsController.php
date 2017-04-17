@@ -20,11 +20,31 @@ class SymbolsController extends Controller
      */
     public function __construct(SymbolsSContract $symbolsS)
     {
-        $this->symbolService = $symbolsS;
+        $this->setSymbolService($symbolsS);
     }
 
     public function testSymbols()
     {
-        $helpMe = null;
+        $this->getSymbolService()->populateSymbolsTable();
+    }
+
+    /**
+     * @return SymbolsSContract
+     */
+    public function getSymbolService(): SymbolsSContract
+    {
+        return $this->symbolService;
+    }
+
+    /**
+     * @param SymbolsSContract $symbolService
+     *
+     * @return SymbolsController
+     */
+    public function setSymbolService(SymbolsSContract $symbolService): SymbolsController
+    {
+        $this->symbolService = $symbolService;
+
+        return $this;
     }
 }
