@@ -8,6 +8,9 @@ use App\Repositories\BaseEntity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
+/**
+ * Interface BaseRepositoryContract.
+ */
 interface BaseRepositoryContract
 {
     /**

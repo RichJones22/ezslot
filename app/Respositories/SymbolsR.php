@@ -23,7 +23,9 @@ class SymbolsR extends BaseRepository implements SymbolsRContract
      */
     public function __construct(
         SymbolsE $entity,
-        OptionsHouseTransaction $model,
+        OptionsHouseTransaction $model, // TODO:  SymbolsR should not be using OptionsHouseTransaction a a model.
+                                        // TODO:  We need to finish the TransactionsR.  This would would then be used by this
+                                        // TODO:  service... Need to to this next!
         Collection $collection)
     {
         parent::__construct($entity, $model, $collection);
