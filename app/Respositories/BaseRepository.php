@@ -59,6 +59,30 @@ abstract class BaseRepository implements BaseRepositoryContract
     }
 
     /**
+     * @param BaseEntity $entity
+     *
+     * @return $this
+     */
+    public function persistEntity(BaseEntity $entity)
+    {
+        /** @var Model $model */
+        $model = new $this->model();
+        foreach (get_class_methods($entity) as $key) {
+            // only method names that begin with 'get'; aka... the getters...
+            if (strncmp($key, 'get', strlen('get'))) {
+                // derive attribute name from getter name; convert camel to snake.
+                $attributeName = str::snake(substr($key, strlen('get'), (strlen($key) - strlen('get'))));
+                $method = 'get'.ucfirst(str::camel($attributeName));
+                $model->setAttribute($attributeName, $entity->$method());
+            }
+        }
+        // persist $model
+        $model->save();
+
+        return $this;
+    }
+
+    /**
      * @return BaseEntity
      */
     public function getEntity(): BaseEntity

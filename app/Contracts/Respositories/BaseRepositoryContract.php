@@ -20,6 +20,13 @@ interface BaseRepositoryContract
     public function hydrateEntity(Collection $records): Collection;
 
     /**
+     * @param BaseEntity $entity
+     *
+     * @return mixed
+     */
+    public function persistEntity(BaseEntity $entity);
+
+    /**
      * @return BaseEntity
      */
     public function getEntity(): BaseEntity;
