@@ -48,10 +48,12 @@ abstract class BaseRepository implements BaseRepositoryContract
     {
         foreach ($records as $record) {
             $entity = new $this->entity();
+
             foreach ($record->getAttributes() as $key => $value) {
                 $method = 'set'.ucfirst(Str::camel($key));
                 $entity->$method($value);
             }
+
             $this->getCollection()->push($entity);
         }
 
@@ -67,16 +69,20 @@ abstract class BaseRepository implements BaseRepositoryContract
     {
         /** @var Model $model */
         $model = new $this->model();
+
         foreach (get_class_methods($entity) as $key) {
             // only method names that begin with 'get'; aka... the getters...
             if (strncmp($key, 'get', strlen('get'))) {
-                // derive attribute name from getter name; convert camel to snake.
+                // derive attribute name from getter name.
                 $attributeName = str::snake(substr($key, strlen('get'), (strlen($key) - strlen('get'))));
+
+                // derive method getter for attribute.
                 $method = 'get'.ucfirst(str::camel($attributeName));
+
                 $model->setAttribute($attributeName, $entity->$method());
             }
         }
-        // persist $model
+
         $model->save();
 
         return $this;
