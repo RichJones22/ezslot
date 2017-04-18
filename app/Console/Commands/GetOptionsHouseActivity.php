@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\OptionsHouseTransaction;
+use App\OptionsHouseTransactionM;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
@@ -39,16 +39,16 @@ class GetOptionsHouseActivity extends Command
      */
     protected $description = 'loads Options House transaction activity';
     /**
-     * @var Model OptionsHouseTransaction
+     * @var Model OptionsHouseTransactionM
      */
     private $optionsHouseTransactionM;
 
     /**
      * GetOptionsHouseActivity constructor.
      *
-     * @param OptionsHouseTransaction $optionsHouseTransaction
+     * @param OptionsHouseTransactionM $optionsHouseTransaction
      */
-    public function __construct(OptionsHouseTransaction $optionsHouseTransaction)
+    public function __construct(OptionsHouseTransactionM $optionsHouseTransaction)
     {
         parent::__construct();
         $this->optionsHouseTransactionM = $optionsHouseTransaction;

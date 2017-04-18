@@ -33,7 +33,7 @@ class SymbolsS implements SymbolsSContract
      */
     public function __construct(
         SymbolsR $symbolsR,
-        SymbolsM $symbolsM // TODO:  SymbolsR should not be using OptionsHouseTransaction a a model.
+        SymbolsM $symbolsM // TODO:  SymbolsR should not be using OptionsHouseTransactionM a a model.
                            // TODO:  We need to finish the TransactionsR.  This would would then be used by this
                            // TODO:  service... Need to to this next!
     ) {
