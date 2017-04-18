@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Contracts\Repositories\SymbolsRContract;
-use App\OptionsHouseTransaction;
+use App\OptionsHouseTransactionM;
 use DB;
 use Illuminate\Support\Collection;
 
@@ -17,13 +17,13 @@ class SymbolsR extends BaseRepository implements SymbolsRContract
     /**
      * SymbolsR constructor.
      *
-     * @param SymbolsE                $entity
-     * @param OptionsHouseTransaction $model
-     * @param Collection              $collection
+     * @param SymbolsE                 $entity
+     * @param OptionsHouseTransactionM $model
+     * @param Collection               $collection
      */
     public function __construct(
         SymbolsE $entity,
-        OptionsHouseTransaction $model, // TODO:  SymbolsR should not be using OptionsHouseTransaction a a model.
+        OptionsHouseTransactionM $model, // TODO:  SymbolsR should not be using OptionsHouseTransactionM a a model.
                                         // TODO:  We need to finish the TransactionsR.  This would would then be used by this
                                         // TODO:  service... Need to to this next!
         Collection $collection)
