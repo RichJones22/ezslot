@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Contracts\Repositories;
 
-use App\Repositories\BaseEntity;
+use App\Entities\BaseEntity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
