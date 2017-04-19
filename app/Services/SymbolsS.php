@@ -8,7 +8,7 @@ use App\Contracts\Repositories\SymbolsRContract;
 use App\Contracts\Services\SymbolsSContract;
 use App\Repositories\SymbolsE;
 use App\Repositories\SymbolsR;
-use App\SymbolsM;
+use App\Models\SymbolsM;
 use Illuminate\Support\Collection;
 
 /**
