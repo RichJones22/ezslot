@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\OptionsHouseTransactionM;
+use App\Models\OptionsHouseTransactionM;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;

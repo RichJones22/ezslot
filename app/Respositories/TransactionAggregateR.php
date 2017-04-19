@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Entities\TransactionAggregateE;
-use App\OptionsHouseTransactionM;
+use App\Models\OptionsHouseTransactionM;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

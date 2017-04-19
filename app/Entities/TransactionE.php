@@ -2,8 +2,6 @@
 
 namespace App\Entities;
 
-use App\Repositories\BaseEntity;
-
 class TransactionE extends BaseEntity
 {
     /** @var string */
