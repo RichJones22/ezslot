@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Entities;
 
@@ -8,6 +10,8 @@ class TransactionE extends BaseEntity
     private $close_date;
     /** @var string */
     private $underlier_symbol;
+    /** @var string */
+    private $security_description;
     /** @var string */
     private $position_state;
     /** @var string */
@@ -24,6 +28,11 @@ class TransactionE extends BaseEntity
     private $symbol;
     /** @var int */
     private $transaction_id;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @return string
@@ -221,6 +230,26 @@ class TransactionE extends BaseEntity
     public function setTransactionId(int $transaction_id): TransactionE
     {
         $this->transaction_id = $transaction_id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSecurityDescription(): string
+    {
+        return $this->security_description;
+    }
+
+    /**
+     * @param string $security_description
+     *
+     * @return TransactionE
+     */
+    public function setSecurityDescription(string $security_description): TransactionE
+    {
+        $this->security_description = $security_description;
 
         return $this;
     }

@@ -13,6 +13,11 @@ class SymbolsE extends BaseEntity
     /** @var string */
     private $security_description;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * @return string
      */

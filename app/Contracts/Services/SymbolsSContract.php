@@ -14,9 +14,14 @@ use Illuminate\Support\Collection;
 interface SymbolsSContract
 {
     /**
-     * @return mixed
+     * @return Collection
      */
     public function symbolsUnique(): Collection;
+
+    /**
+     * Symbols table persistence.
+     */
+    public function populateSymbolsTable();
 
     /**
      * @return SymbolsRContract
@@ -33,5 +38,12 @@ interface SymbolsSContract
     /**
      * @return mixed
      */
-    public function populateSymbolsTable();
+    public function getTransactionR();
+
+    /**
+     * @param mixed $transactionR
+     *
+     * @return SymbolsS
+     */
+    public function setTransactionR($transactionR);
 }
