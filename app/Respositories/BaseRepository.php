@@ -71,11 +71,10 @@ abstract class BaseRepository implements BaseRepositoryContract
         /** @var Model $model */
         $model = new $this->model();
 
-        foreach (get_class_methods($entity) as $key) {
-            // only method names that begin with 'get'; aka... the getters...
-            if (strncmp($key, 'get', strlen('get'))) {
+        foreach (get_class_methods($entity) as $method) {
+            if ($entity->isValidMethod($method)) {
                 // derive attribute name from getter name.
-                $attributeName = str::snake(substr($key, strlen('get'), (strlen($key) - strlen('get'))));
+                $attributeName = str::snake(substr($method, strlen('get'), (strlen($method) - strlen('get'))));
 
                 // derive method getter for attribute.
                 $method = 'get'.ucfirst(str::camel($attributeName));

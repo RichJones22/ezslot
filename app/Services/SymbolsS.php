@@ -6,9 +6,7 @@ namespace App\Services;
 
 use App\Contracts\Repositories\SymbolsRContract;
 use App\Contracts\Services\SymbolsSContract;
-use App\Repositories\SymbolsE;
 use App\Repositories\SymbolsR;
-use App\Models\SymbolsM;
 use Illuminate\Support\Collection;
 
 /**
@@ -20,25 +18,24 @@ class SymbolsS implements SymbolsSContract
      * @var SymbolsRContract
      */
     private $symbolsR;
+
     /**
-     * @var SymbolsM
+     * @var
      */
-    private $symbolsM;
+    private $transactionR;
 
     /**
      * SymbolsS constructor.
      *
-     * @param SymbolsR $symbolsR
-     * @param SymbolsM $symbolsM
+     * @param SymbolsR     $symbolsR
+     * @param TransactionR $transactionR
      */
     public function __construct(
         SymbolsR $symbolsR,
-        SymbolsM $symbolsM // TODO:  SymbolsR should not be using OptionsHouseTransactionM a a model.
-                           // TODO:  We need to finish the TransactionsR.  This would would then be used by this
-                           // TODO:  service... Need to to this next!
+        TransactionR $transactionR
     ) {
         $this->setSymbolsR($symbolsR);
-        $this->setSymbolsM($symbolsM);
+        $this->setTransactionR($transactionR);
     }
 
     /**
@@ -46,22 +43,25 @@ class SymbolsS implements SymbolsSContract
      */
     public function symbolsUnique(): Collection
     {
-        /** @var SymbolsR $repo */
-        $repo = $this->getSymbolsR();
+        // if the symbols table contains data, return it.
+        if (count($allSymbols = $this->doesSymbolsDataExists())) {
+            return $allSymbols;
+        }
 
-        return $repo->symbolsUnique();
+        // symbols table does not contain data; get symbols data from the options_house_transaction table.
+        return $this->getSymbolsDataFromOptionHouseTransactionTable();
     }
 
+    /**
+     * Symbols table persistence.
+     */
     public function populateSymbolsTable()
     {
+        $allSymbols = $this->symbolsUnique();
+
         /** @var SymbolsR $repo */
         $repo = $this->getSymbolsR();
-        $allSymbols = $repo->symbolsUnique();
 
-        // switch model to symbols model.
-        $repo->setModel($this->getSymbolsM());
-
-        /** @var SymbolsE $symbol */
         foreach ($allSymbols as $symbol) {
             if ( ! $repo->rowExistsByUnderlierSymbol($symbol)) {
                 $repo->persistEntity($symbol);
@@ -90,22 +90,55 @@ class SymbolsS implements SymbolsSContract
     }
 
     /**
-     * @return SymbolsM
+     * @return mixed
      */
-    public function getSymbolsM(): SymbolsM
+    public function getTransactionR()
     {
-        return $this->symbolsM;
+        return $this->transactionR;
     }
 
     /**
-     * @param SymbolsM $symbolsM
+     * @param mixed $transactionR
      *
      * @return SymbolsS
      */
-    public function setSymbolsM(SymbolsM $symbolsM): SymbolsS
+    public function setTransactionR($transactionR)
     {
-        $this->symbolsM = $symbolsM;
+        $this->transactionR = $transactionR;
 
         return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    protected function doesSymbolsDataExists(): Collection
+    {
+        /** @var SymbolsR $repo */
+        $repo = $this->getSymbolsR();
+
+        return $repo->symbolsUnique();
+    }
+
+    /**
+     * @return Collection
+     */
+    protected function getSymbolsDataFromOptionHouseTransactionTable(): Collection
+    {
+        /** @var TransactionR $repo */
+        $repo = $this->getTransactionR();
+        $allSymbols = $repo->symbolsUnique();
+
+        /** @var SymbolsR $repo */
+        $repo = $this->getSymbolsR();
+        $symbolE = $repo->getEntity();
+
+        $collection = $repo->getCollection();
+
+        foreach ($allSymbols as $transactionE) {
+            $collection->push($symbolE->translateByEntity($transactionE));
+        }
+
+        return $collection;
     }
 }
