@@ -47,6 +47,8 @@ abstract class BaseRepository implements BaseRepositoryContract
      */
     public function hydrateEntity(Collection $records): Collection
     {
+        $collection = new $this->collection;
+
         foreach ($records as $record) {
             $entity = new $this->entity();
 
@@ -55,10 +57,10 @@ abstract class BaseRepository implements BaseRepositoryContract
                 $entity->$method($value);
             }
 
-            $this->getCollection()->push($entity);
+            $collection->push($entity);
         }
 
-        return $this->getCollection();
+        return $collection;
     }
 
     /**
