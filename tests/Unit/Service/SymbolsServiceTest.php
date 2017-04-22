@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\ServiceTests;
 
+use App\database\fixtures\SeedOptionsHouseTransaction;
 use App\Entities\TransactionE;
 use App\Models\OptionsHouseTransactionM;
 use App\Models\SymbolsM;
@@ -53,7 +54,7 @@ class SymbolsServiceTest extends TestCase
             new Collection()
         );
 
-        Artisan::call('db:seed', ['--class' => 'SeedOptionsHouseTransaction']);
+        Artisan::call('db:seed', ['--class' => SeedOptionsHouseTransaction::class]);
 
     }
 

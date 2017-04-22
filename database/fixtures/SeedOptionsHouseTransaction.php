@@ -1,45 +1,49 @@
-<?php
+<?php declare(strict_types=1);
 
+namespace App\database\fixtures;
+
+use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Seeder;
+use Schema;
 
 class SeedOptionsHouseTransaction extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
-        if (Schema::hasTable('options_house_transaction'))
-        {
-            foreach($this->data() as $row)
-            {
+        if (Schema::hasTable('options_house_transaction')) {
+
+            DB::table('options_house_transaction')->truncate();
+
+            foreach ($this->data() as $row) {
                 DB::table('options_house_transaction')->insert([
-                    'transaction_id'       => $row[0],
-                    'close_date'           => $row[1],
-                    'close_time'           => $row[2],
-                    'trade_type'           => $row[3],
-                    'description'          => $row[4],
-                    'strike_price'         => $row[5],
-                    'option_type'          => $row[6],
-                    'option_side'          => $row[7],
-                    'option_quantity'      => $row[8],
-                    'symbol'               => $row[9],
-                    'price_per_unit'       => $row[10],
-                    'underlier_symbol'     => $row[11],
-                    'fee'                  => $row[12],
-                    'commission'           => $row[13],
-                    'amount'               => $row[14],
-                    'security_type'        => $row[15],
-                    'expiration'           => $row[16],
+                    'transaction_id' => $row[0],
+                    'close_date' => $row[1],
+                    'close_time' => $row[2],
+                    'trade_type' => $row[3],
+                    'description' => $row[4],
+                    'strike_price' => $row[5],
+                    'option_type' => $row[6],
+                    'option_side' => $row[7],
+                    'option_quantity' => $row[8],
+                    'symbol' => $row[9],
+                    'price_per_unit' => $row[10],
+                    'underlier_symbol' => $row[11],
+                    'fee' => $row[12],
+                    'commission' => $row[13],
+                    'amount' => $row[14],
+                    'security_type' => $row[15],
+                    'expiration' => $row[16],
                     'security_description' => $row[17],
-                    'position_state'       => $row[18],
-                    'deliverables'         => $row[19],
-                    'market_statistics'    => $row[20],
-                    'trade_journal_notes'  => $row[21],
-                    'created_at'    => new \Carbon\Carbon(),
-                    'updated_at'    => new \Carbon\Carbon()
+                    'position_state' => $row[18],
+                    'deliverables' => $row[19],
+                    'market_statistics' => $row[20],
+                    'trade_journal_notes' => $row[21],
+                    'created_at' => new Carbon(),
+                    'updated_at' => new Carbon(),
                 ]);
             }
         }
@@ -57,5 +61,4 @@ class SeedOptionsHouseTransaction extends Seeder
             [1000052177321, '2016-10-07', '10:20:08', 'Trade', 'Sold 2 PBI Nov16 18 put (PBIW1816C018000) @ $0.96', 18, 'PUT', 'SELL', 2, 'PBIW1816C018000', 0, 'PBI', 0.1, 0.3, 191.6, 'Option', '2016-11-18', 'Pitney Bowes Ord Shs', 'OPEN', 'PBI PBI 100.0 100 null null  PBI : 100', '', '', '2017-04-22 03:20:35', '2017-04-22 03:20:35'],
         ];
     }
-
 }

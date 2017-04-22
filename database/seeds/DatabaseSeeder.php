@@ -1,5 +1,6 @@
 <?php
 
+use App\database\fixtures\SeedOptionsHouseTransaction;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
