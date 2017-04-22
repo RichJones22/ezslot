@@ -53,7 +53,7 @@ class SymbolsServiceTest extends TestCase
             new Collection()
         );
 
-        Artisan::call('db:seed');
+        Artisan::call('db:seed', ['--class' => 'SeedOptionsHouseTransaction']);
 
     }
 
@@ -75,6 +75,7 @@ class SymbolsServiceTest extends TestCase
         $transSymbols = $this->transactionR->symbolsUnique();
 
         $this->assertSame(count($allSymbols), count($transSymbols));
+        $this->assertGreaterThan(0, count($transSymbols));
     }
 
     /**
@@ -88,11 +89,12 @@ class SymbolsServiceTest extends TestCase
     {
         $tomorrow = Carbon::now()->addDays(1);
 
-        $count1 = DB::table('options_house_transaction')->count();
-
+        // verify that we are using sqlite_testing db...
         $config = DB::getConfig();
+        $this->assertEquals('sqlite_testing', $config['name']);
 
         // check to make sure the options_house_transaction table is not empty.
+        $count1 = DB::table('options_house_transaction')->count();
         $this->assertGreaterThan(0, $count1);
 
         DB::beginTransaction();
