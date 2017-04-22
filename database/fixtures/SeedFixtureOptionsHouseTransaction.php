@@ -7,7 +7,7 @@ use DB;
 use Illuminate\Database\Seeder;
 use Schema;
 
-class SeedOptionsHouseTransaction extends Seeder
+class SeedFixtureOptionsHouseTransaction extends Seeder
 {
     /**
      * Run the database seeds.

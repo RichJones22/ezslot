@@ -1,6 +1,6 @@
 <?php
 
-use App\database\fixtures\SeedOptionsHouseTransaction;
+use App\database\fixtures\SeedFixtureOptionsHouseTransaction;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(SeedOptionsHouseTransaction::class);
+         $this->call(SeedFixtureOptionsHouseTransaction::class);
     }
 }
