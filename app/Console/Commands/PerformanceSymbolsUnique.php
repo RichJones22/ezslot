@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Services\SymbolsS;
@@ -19,16 +21,16 @@ class PerformanceSymbolsUnique extends Command
      *
      * @var string
      */
-    protected $description = 'Performance command to be run with Blackfire';
+    protected $description = 'Performance command to be run with Black Fire';
     /**
      * @var SymbolsS
      */
     private $symbolsS;
 
     /**
-     * Create a new command instance.
+     * PerformanceSymbolsUnique constructor.
      *
-     * @return void
+     * @param SymbolsS $symbolsS
      */
     public function __construct(SymbolsS $symbolsS)
     {
@@ -44,5 +46,7 @@ class PerformanceSymbolsUnique extends Command
     public function handle()
     {
         $this->symbolsS->symbolsUnique();
+
+        return $this;
     }
 }
