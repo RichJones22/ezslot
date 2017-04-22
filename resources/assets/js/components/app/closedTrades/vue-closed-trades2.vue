@@ -37,7 +37,7 @@
                         let data1 = [];
                         data1.push(response.data[i].close_date);
                         data1.push(response.data[i].underlier_symbol);
-                        data1.push(response.data[i].profits);
+                        data1.push(ezsNS.ezSlot.utils.round(response.data[i].profits, 2));
 
                         dataSet.push(data1);
                     }
