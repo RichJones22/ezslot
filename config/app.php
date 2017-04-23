@@ -136,6 +136,8 @@ return [
     */
 
     'providers' => [
+        Barryvdh\Debugbar\ServiceProvider::class,
+
 
         /*
          * Laravel Framework Service Providers...
@@ -181,7 +183,7 @@ return [
         App\Providers\SparkServiceProvider::class,
 
         \App\Providers\ezSlotServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        Appointer\Swaggervel\SwaggervelServiceProvider::class,
 
     ],
 
