@@ -18,12 +18,19 @@ Route::get('/', function () {
 //
 Route::get('/home', 'HomeController@show');
 
-Route::get('/test','SymbolsController@testSymbols');
+
+/*
+ * --------------------------------------------------------------------------------------------------------------------
+ * barryvdh testing routes.
+ * --------------------------------------------------------------------------------------------------------------------
+ */
+Route::get('/testSymbolsUnique','SymbolsController@testSymbolsUnique');
+Route::get('/testPopulateSymbolsTable','SymbolsController@testPopulateSymbolsTable');
 
 
 /*
  * --------------------------------------------------------------------------------------------------------------------
- * API Docs (Swagger
+ * API Docs (Swagger)
  * --------------------------------------------------------------------------------------------------------------------
  */
 Route::get('/api-docs', 'ApiDocController@index');

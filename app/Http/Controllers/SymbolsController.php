@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Contracts\Services\SymbolsSContract;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class SymbolsController.
@@ -23,9 +24,32 @@ class SymbolsController extends Controller
         $this->setSymbolService($symbolsS);
     }
 
-    public function testSymbols()
+    /*
+     *  testing only method.
+     */
+    public function testPopulateSymbolsTable()
     {
-        $this->getSymbolService()->populateSymbolsTable();
+        if (App::environment('local')) {
+            $this->getSymbolService()->populateSymbolsTable();
+
+            return 'success';
+        }
+
+        return $this;
+    }
+
+    /*
+     *  testing only method.
+     */
+    public function testSymbolsUnique()
+    {
+        if (App::environment('local')) {
+            $this->getSymbolService()->symbolsUnique();
+
+            return 'success';
+        }
+
+        return $this;
     }
 
     /**

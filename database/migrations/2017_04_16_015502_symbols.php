@@ -13,8 +13,7 @@ class Symbols extends Migration
     public function up()
     {
         \Schema::create('symbols', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('underlier_symbol');
+            $table->string('underlier_symbol')->primary();
             $table->string('security_description');
             $table->timestamps();
         });
