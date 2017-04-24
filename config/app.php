@@ -136,6 +136,8 @@ return [
     */
 
     'providers' => [
+        Barryvdh\Debugbar\ServiceProvider::class,
+
 
         /*
          * Laravel Framework Service Providers...
@@ -179,6 +181,9 @@ return [
         Laravel\Spark\Providers\SparkServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         App\Providers\SparkServiceProvider::class,
+
+        \App\Providers\ezSlotServiceProvider::class,
+        Appointer\Swaggervel\SwaggervelServiceProvider::class,
 
     ],
 
@@ -228,6 +233,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
