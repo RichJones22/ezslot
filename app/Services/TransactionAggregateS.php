@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Entities\TransactionAggregateE;
+use App\Repositories\SymbolsE;
 use App\Repositories\TransactionAggregateR;
 use DB;
 use Illuminate\Support\Collection;
@@ -67,9 +68,10 @@ class TransactionAggregateS
             ->symbolsUnique()
             ->all();
 
+        /** @var SymbolsE $symbol */
         foreach ($allSymbols as $symbol) {
             $transactions = $this
-                ->getBySymbolTransaction($symbol->underlier_symbol);
+                ->getBySymbolTransaction($symbol->getUnderlierSymbol());
 
             $tmp = $transactions->filter(function (TransactionAggregateE $x) {
                 return $x->getTradeClosed();
@@ -90,7 +92,7 @@ class TransactionAggregateS
         /** @var Collection $tmp */
         $tmp = new Collection($tmp);
         $tmp = $tmp->sort()->reverse();
-        $tmp = $tmp->sort()->reverse()->filter(function (TransactionAggregateE $x) use ($monthsBack) {
+        $tmp = $tmp->filter(function (TransactionAggregateE $x) use ($monthsBack) {
             return $x->getCloseDate() > $monthsBack;
         });
 
@@ -302,11 +304,10 @@ class TransactionAggregateS
 
     /**
      * @param $symbol
-     * @param null $fromDate
      *
      * @return Collection
      */
-    protected function getBySymbolTransaction($symbol, $fromDate = null): Collection
+    protected function getBySymbolTransaction($symbol): Collection
     {
         $tradeProfit = 0;
 

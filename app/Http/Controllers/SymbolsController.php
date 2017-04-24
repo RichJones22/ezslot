@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Services\SymbolsS;
-use Illuminate\Support\Collection;
+use App\Contracts\Services\SymbolsSContract;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class SymbolsController.
@@ -15,43 +17,58 @@ class SymbolsController extends Controller
     /**
      * SymbolsController constructor.
      *
-     * @param SymbolsS $symbolService
+     * @param SymbolsSContract $symbolsS
      */
-    public function __construct(SymbolsS $symbolService)
+    public function __construct(SymbolsSContract $symbolsS)
     {
-        $this->symbolService = $symbolService;
+        $this->setSymbolService($symbolsS);
     }
 
-    /**
-     * @return array
+    /*
+     *  testing only method.
      */
-    public function symbolsUnique()
+    public function testPopulateSymbolsTable()
     {
-        $symbolCollection = $this->symbolService->symbolsUnique();
+        if (App::environment('local')) {
+            $this->getSymbolService()->populateSymbolsTable();
 
-        // convert the collection to an array
-        return $this->convertToJsonableType($symbolCollection);
-    }
-
-    /**
-     * @param Collection $transactionCollection
-     *
-     * @return array
-     */
-    protected function convertToJsonableType(collection $transactionCollection): array
-    {
-        $data = [];
-
-        $transactions = $transactionCollection->all();
-
-        foreach ($transactions as $transaction) {
-            $tmp = [];
-            $tmp['text'] = $transaction->underlier_symbol;
-            $tmp['value'] = $transaction->underlier_symbol;
-
-            $data[] = $tmp;
+            return 'success';
         }
 
-        return $data;
+        return $this;
+    }
+
+    /*
+     *  testing only method.
+     */
+    public function testSymbolsUnique()
+    {
+        if (App::environment('local')) {
+            $this->getSymbolService()->symbolsUnique();
+
+            return 'success';
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return SymbolsSContract
+     */
+    public function getSymbolService(): SymbolsSContract
+    {
+        return $this->symbolService;
+    }
+
+    /**
+     * @param SymbolsSContract $symbolService
+     *
+     * @return SymbolsController
+     */
+    public function setSymbolService(SymbolsSContract $symbolService): SymbolsController
+    {
+        $this->symbolService = $symbolService;
+
+        return $this;
     }
 }

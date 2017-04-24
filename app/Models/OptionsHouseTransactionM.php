@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace App;
+declare(strict_types=1);
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OptionsHouseTransaction extends Model
+class OptionsHouseTransactionM extends Model
 {
     /**
      *  table used by this model.

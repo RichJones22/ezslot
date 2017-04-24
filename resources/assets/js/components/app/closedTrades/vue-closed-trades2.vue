@@ -37,7 +37,7 @@
                         let data1 = [];
                         data1.push(response.data[i].close_date);
                         data1.push(response.data[i].underlier_symbol);
-                        data1.push(response.data[i].profits);
+                        data1.push(ezsNS.ezSlot.utils.displayCurrency(response.data[i].profits, 2));
 
                         dataSet.push(data1);
                     }
@@ -46,9 +46,12 @@
                         // data and table columns
                         data: dataSet,
                         columns: [
-                            { title: "Trade Date" },
+                            { title: "Trade Date"},
                             { title: "Symbol" },
                             { title: "Profits" },
+                        ],
+                        order: [
+                          [0, "desc" ]
                         ],
                         // print, copy and excel buttons
                         dom: 'lftiprB',
@@ -91,7 +94,9 @@
                     });
                     //stop spinner
                     ezsNS.ezSlot.utils.spinner.spinnerByIdStop();
-                });
+                }).catch(function (error) {
+                    console.log(error);
+            });
         }
     }
 </script>
