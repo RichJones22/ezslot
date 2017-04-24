@@ -6,8 +6,11 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "appointer/swaggervel": "^2.0",
+        "barryvdh/laravel-debugbar": "^2.3",
         "barryvdh/laravel-ide-helper": "^2.3",
         "laravel/cashier": "~7.0",
+        "laravel/dusk": "^1.0",
         "laravel/framework": "5.4.*",
         "laravel/spark": "~4.0",
         "laravel/tinker": "~1.0",
@@ -40,13 +43,13 @@
             "php artisan key:generate"
         ],
         "app_setup": [
+            "composer dumpautoload -o",
             "php artisan clear-compiled",
             "php artisan cache:clear",
             "php artisan view:clear",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
-            "php artisan optimize",
-            "composer dumpautoload -o"
+            "php artisan optimize"
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",

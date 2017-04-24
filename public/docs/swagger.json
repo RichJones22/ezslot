@@ -1,0 +1,44 @@
+{
+    "swagger": "2.0",
+    "paths": {
+        "/api/closedSymbols": {
+            "get": {
+                "tags": [
+                    "Closed Trades"
+                ],
+                "summary": "derive a list of closed transactions",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                },
+                "schemes": [
+                    "http"
+                ]
+            }
+        },
+        "/testPopulateSymbolsTable": {
+            "get": {
+                "tags": [
+                    "Tests"
+                ],
+                "summary": "test the Symbols->PopulateSymbolsTable() method",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                },
+                "schemes": [
+                    "http"
+                ]
+            }
+        }
+    },
+    "definitions": {}
+}

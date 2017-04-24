@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Entities\TransactionAggregateE;
-use App\OptionsHouseTransaction;
+use App\Models\OptionsHouseTransactionM;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -43,12 +43,12 @@ class TransactionAggregateR
     /**
      * TransactionAggregateR constructor.
      *
-     * @param OptionsHouseTransaction $optionsHouseTransaction
-     * @param Collection              $collection
-     * @param TransactionAggregateE   $aggregateE
+     * @param OptionsHouseTransactionM $optionsHouseTransaction
+     * @param Collection               $collection
+     * @param TransactionAggregateE    $aggregateE
      */
     public function __construct(
-        OptionsHouseTransaction $optionsHouseTransaction,
+        OptionsHouseTransactionM $optionsHouseTransaction,
         Collection $collection,
         TransactionAggregateE $aggregateE
     ) {
