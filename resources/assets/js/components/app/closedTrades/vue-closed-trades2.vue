@@ -1,9 +1,17 @@
 <template>
     <div class="m-table">
         <table id="example" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Trade Date</th>
+                <th>Symbol</th>
+                <th>Profit</th>
+            </tr>
+            </thead>
             <tfoot>
                 <tr>
-                    <th colspan="3" style="text-align:right"></th>
+                    <th colspan="4" style="text-align:right"></th>
                 </tr>
             </tfoot>
         </table>
@@ -16,7 +24,16 @@
         border-radius: 3rem;
         background-color: #a2a2a2;
     }
-    th { white-space: nowrap; }
+    th {
+        white-space: nowrap;
+    }
+    td.details-control {
+        background: url('../../../../../../public/img/detail_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+    tr.shown td.details-control {
+        background: url('../../../../../../public/img/detail_close.png') no-repeat center center;
+    }
 </style>
 <script>
     export default {
@@ -46,12 +63,18 @@
                         // data and table columns
                         data: dataSet,
                         columns: [
-                            { title: "Trade Date"},
-                            { title: "Symbol" },
-                            { title: "Profits" },
+                            {
+                                "className":      'details-control',
+                                "orderable":      false,
+                                "data":           null,
+                                "defaultContent": ''
+                            },
+                            { data: 0 },
+                            { data: 1 },
+                            { data: 2 },
                         ],
                         order: [
-                          [0, "desc" ]
+                          [1, "desc" ]
                         ],
                         // print, copy and excel buttons
                         dom: 'lftiprB',
@@ -72,7 +95,7 @@
 
                             // Total over all pages
                             let total = api
-                                .column( 2 )
+                                .column( 3 )
                                 .data()
                                 .reduce( function (a, b) {
                                     return intVal(a) + intVal(b);
@@ -80,23 +103,64 @@
 
                             // Total over this page
                             let pageTotal = api
-                                .column( 2, { page: 'current'} )
+                                .column( 3, { page: 'current'} )
                                 .data()
                                 .reduce( function (a, b) {
                                     return intVal(a) + intVal(b);
                                 }, 0 );
 
                             // Update footer
-                            $( api.column( 2 ).footer() ).html(
+                            $( api.column( 3 ).footer() ).html(
                                 'Page Total: '+ ezsNS.ezSlot.utils.displayCurrency(pageTotal,2) + ' -- Grand Total '+ ezsNS.ezSlot.utils.displayCurrency(total,2)
                             );
                         }
                     });
+
+                    /* Formatting function for row details - modify as you need */
+                    function format ( d ) {
+                        // `d` is the original data object for the row
+                        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                            '<tr>'+
+                            '<td>Full name:</td>'+
+                            '<td>'+d.name+'</td>'+
+                            '</tr>'+
+                            '<tr>'+
+                            '<td>Extension number:</td>'+
+                            '<td>'+d.extn+'</td>'+
+                            '</tr>'+
+                            '<tr>'+
+                            '<td>Extra info:</td>'+
+                            '<td>And any further details here (images etc)...</td>'+
+                            '</tr>'+
+                            '</table>';
+                    }
+
+                    // Add event listener for opening and closing details
+                    $('#example tbody').on('click', 'td.details-control', function () {
+                        let table = $('#example').DataTable();
+                        let tr = $(this).closest('tr');
+                        let row = table.row( tr );
+
+                        if ( row.child.isShown() ) {
+                            // This row is already open - close it
+                            row.child.hide();
+                            tr.removeClass('shown');
+                        }
+                        else {
+                            // Open this row
+                            row.child( format(row.data()) ).show();
+                            tr.addClass('shown');
+                        }
+                    } );
+
+
                     //stop spinner
                     ezsNS.ezSlot.utils.spinner.spinnerByIdStop();
                 }).catch(function (error) {
                     console.log(error);
             });
+
+
         }
     }
 </script>
