@@ -66,6 +66,10 @@ mix
     // having an issue with my .combine technique above; I get two app.js files and
     // .version()
     .sass('./resources/assets/sass/app.scss', 'css/ezSlot.css')
+    .combine([
+        './resources/assets/sass/vendor/dataTablesJQuery/datatables.min.css',
+        'public/css/ezSlot.css'
+    ], 'public/css/ezSlot.css')
     .copy('resources/assets/img/details_close.png', 'public/img/detail_close.png')
     .copy('resources/assets/img/details_open.png', 'public/img/detail_open.png')
 ;
