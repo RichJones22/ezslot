@@ -12,14 +12,12 @@ window.$ = window.jQuery = require('jquery');
 require('bootstrap-sass');
 require('font-awesome/css/font-awesome.css');
 require('jquery.easing');
-// require('datatables.net');
-// require('datatables.net-bs');
-// require('datatables.net-buttons');
-// require('datatables.net-buttons-bs');
-// require('datatables.net-responsive');
-// require('datatables.net-responsive-bs');
-// require( 'datatables.net-buttons/js/buttons.html5.js' );
-// require('datatables.net-jqui');
+require('datatables.net');
+require('datatables.net-bs');
+require('datatables.net-buttons');
+require('datatables.net-buttons-bs');
+require('datatables.net-buttons/js/buttons.print');
+require( 'datatables.net-buttons/js/buttons.html5.js' );
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
