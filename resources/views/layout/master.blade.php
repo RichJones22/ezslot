@@ -17,7 +17,7 @@
 <!-- page content -->
 @yield('content')
 
-<!-- site Footer -->
+<!-- site footer -->
 @include('footer.appFooter')
 
 <script src="{{mix('js/ezSlot.js')}}"></script>
