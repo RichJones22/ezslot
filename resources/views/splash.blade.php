@@ -26,7 +26,6 @@
                 </div>
             </div>
             <div class="row">
-                {{--<vue-closed-trades></vue-closed-trades>--}}
                 <vue-closed-trades2></vue-closed-trades2>
             </div>
         </div>
