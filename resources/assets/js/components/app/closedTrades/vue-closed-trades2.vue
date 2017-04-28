@@ -118,6 +118,17 @@
 
                     /* Formatting function for row details - modify as you need */
                     function format ( d ) {
+                        axios.get('/api/getTradeDetails')
+                            .then(function (response) {
+                                console.log(response);
+
+                                for(let i=0;i<response.data.length; i++){
+                                    console.log(response.data[i].close_date);
+                                    console.log(response.data[i].underlier_symbol);
+                                    console.log(response.data[i].amount);
+                                }
+
+                            });
                         // `d` is the original data object for the row
                         return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                             '<tr>'+
