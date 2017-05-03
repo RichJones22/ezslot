@@ -34,6 +34,9 @@
     tr.shown td.details-control {
         background: url('../../../../../../public/img/detail_close.png') no-repeat center center;
     }
+    td.right-align {
+        text-align: right;
+    }
 </style>
 <script>
     export default {
@@ -71,7 +74,7 @@
                             },
                             { data: 0 },
                             { data: 1 },
-                            { data: 2 },
+                            { data: 2, "class": "right-align" },
                         ],
                         order: [
                           [1, "desc" ]
@@ -132,16 +135,16 @@
                         // `d` is the original data object for the row
                         return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                             '<tr>'+
-                            '<td>Full name:</td>'+
-                            '<td>'+d.name+'</td>'+
+                            '<td>close Date:</td>'+
+                            '<td>'+response.data[0].close_date+'</td>'+
                             '</tr>'+
                             '<tr>'+
-                            '<td>Extension number:</td>'+
-                            '<td>'+d.extn+'</td>'+
+                            '<td>symbols:</td>'+
+                            '<td>'+response.data[0].underlier_symbol+'</td>'+
                             '</tr>'+
                             '<tr>'+
-                            '<td>Extra info:</td>'+
-                            '<td>And any further details here (images etc)...</td>'+
+                            '<td>amount:</td>'+
+                            '<td>'+response.data[0].amount+'</td>'+
                             '</tr>'+
                             '</table>';
                     }
