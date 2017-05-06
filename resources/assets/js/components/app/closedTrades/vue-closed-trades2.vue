@@ -2,12 +2,12 @@
     <div class="m-table">
         <table id="example" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
             <thead>
-            <tr>
-                <th></th>
-                <th>Trade Date</th>
-                <th>Symbol</th>
-                <th>Profit</th>
-            </tr>
+                <tr>
+                    <th></th>
+                    <th>Trade Date</th>
+                    <th>Symbol</th>
+                    <th>Profit</th>
+                </tr>
             </thead>
             <tfoot>
                 <tr>
@@ -114,39 +114,146 @@
 
                             // Update footer
                             $( api.column( 3 ).footer() ).html(
-                                'Page Total: '+ ezsNS.ezSlot.utils.displayCurrency(pageTotal,2) + ' -- Grand Total '+ ezsNS.ezSlot.utils.displayCurrency(total,2)
+                                'Page Total: '+ self.displayDollars(pageTotal) + ' -- Grand Total '+ self.displayDollars(total)
                             );
                         }
                     });
 
                     /* Formatting function for row details - modify as you need */
-                    function format ( d ) {
-                        axios.get('/api/getTradeDetails')
+                    function format () {
+                        let table = document.createElement('table'), tr, td, total=0;
+                        table.setAttribute("style", "float:right");
+
+                        axios
+                            .get('/api/getTradeDetails')
                             .then(function (response) {
-                                console.log(response);
 
-                                for(let i=0;i<response.data.length; i++){
-                                    console.log(response.data[i].close_date);
-                                    console.log(response.data[i].underlier_symbol);
-                                    console.log(response.data[i].amount);
+                                // first header.
+                                iTblHeader01(table);
+                                iTblHeader02(table);
+
+                                for (let i = 0; i < response.data.length; i++) {
+                                    tr = document.createElement('tr');
+                                    //
+                                    td = document.createElement('td');
+                                    tr.appendChild(td);
+                                    td.innerHTML = response.data[i].close_date;
+                                    table.appendChild(tr);
+                                    //
+                                    td = document.createElement('td');
+                                    tr.appendChild(td);
+                                    td.innerHTML = response.data[i].underlier_symbol;
+                                    table.appendChild(tr);
+                                    //
+                                    td = document.createElement('td');
+                                    tr.appendChild(td);
+                                    td.innerHTML = response.data[i].option_type;
+                                    table.appendChild(tr);
+                                    //
+                                    td = document.createElement('td');
+                                    tr.appendChild(td);
+                                    td.innerHTML = response.data[i].option_side;
+                                    table.appendChild(tr);
+                                    //
+                                    td = document.createElement('td');
+                                    td.className = "right-align";
+                                    tr.appendChild(td);
+                                    td.innerHTML = self.displayDollars(ParseIntOrEmptyString(response.data[i].amount)) + "&nbsp&nbsp";
+                                    table.appendChild(tr);
+                                    //
+                                    td = document.createElement('td');
+//                                    td.className = "right-align";
+                                    tr.appendChild(td);
+
+                                    let value = ParseIntOrEmptyString(response.data[i].profits);
+
+                                    td.innerHTML = value !== "" ? self.displayDollars(value) : value;
+                                    table.appendChild(tr);
+
+                                    if (value !== "") {
+                                        total += value;
+                                    }
                                 }
+                                iTblFooter01(table);
+                                iTblFooter02(table,total);
+                            })
+                            .catch(function (response) {
+                                console.log(response);
+                            })
+                        ;
 
-                            });
-                        // `d` is the original data object for the row
-                        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                            '<tr>'+
-                            '<td>close Date:</td>'+
-                            '<td>'+response.data[0].close_date+'</td>'+
-                            '</tr>'+
-                            '<tr>'+
-                            '<td>symbols:</td>'+
-                            '<td>'+response.data[0].underlier_symbol+'</td>'+
-                            '</tr>'+
-                            '<tr>'+
-                            '<td>amount:</td>'+
-                            '<td>'+response.data[0].amount+'</td>'+
-                            '</tr>'+
-                            '</table>';
+                        return table;
+                    }
+
+                    function ParseIntOrEmptyString(value) {
+                        let intValue = parseInt(value);
+
+                        if (isNaN(intValue)) {
+                            return "";
+                        }
+
+                        return intValue;
+                    }
+
+                    function tblDetail(table,tr,str) {
+                        let td;
+
+                        td = document.createElement('td');
+                        tr.appendChild(td);
+                        td.innerHTML = str;
+                        table.appendChild(tr);
+                    }
+
+                    function iTblHeader01(table) {
+                        let tr;
+
+                        tr = document.createElement('tr');
+                        //
+                        tblDetail(table,tr,"close Date &nbsp");
+                        tblDetail(table,tr,"symbols &nbsp");
+                        tblDetail(table,tr,"type &nbsp");
+                        tblDetail(table,tr,"side &nbsp");
+                        tblDetail(table,tr,"amount &nbsp&nbsp");
+                        tblDetail(table,tr,"profit &nbsp");
+                    }
+
+                    function iTblHeader02(table) {
+                        let tr;
+
+                        tr = document.createElement('tr');
+                        //
+                        tblDetail(table,tr,"===========&nbsp");
+                        tblDetail(table,tr,"========&nbsp");
+                        tblDetail(table,tr,"=====&nbsp");
+                        tblDetail(table,tr,"=====&nbsp");
+                        tblDetail(table,tr,"=========&nbsp");
+                        tblDetail(table,tr,"=======&nbsp");
+                    }
+
+                    function iTblFooter01 (table) {
+                        let tr;
+
+                        tr = document.createElement('tr');
+                        //
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"=======&nbsp");
+                    }
+
+                    function iTblFooter02 (table, total) {
+                        let tr;
+
+                        tr = document.createElement('tr');
+                        //
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"");
+                        tblDetail(table,tr,"Total");
+                        tblDetail(table,tr,self.displayDollars(total));
                     }
 
                     // Add event listener for opening and closing details
@@ -162,19 +269,21 @@
                         }
                         else {
                             // Open this row
-                            row.child( format(row.data()) ).show();
+                            row.child( format() ).show();
                             tr.addClass('shown');
                         }
-                    } );
-
+                    });
 
                     //stop spinner
                     ezsNS.ezSlot.utils.spinner.spinnerByIdStop();
                 }).catch(function (error) {
                     console.log(error);
             });
-
-
+        },
+        methods: {
+            displayDollars: function(num) {
+                return ezsNS.ezSlot.utils.displayCurrency(num,2)
+            }
         }
     }
 </script>

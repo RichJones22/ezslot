@@ -17,7 +17,7 @@ require('datatables.net-bs');
 require('datatables.net-buttons');
 require('datatables.net-buttons-bs');
 require('datatables.net-buttons/js/buttons.print');
-require( 'datatables.net-buttons/js/buttons.html5.js' );
+require('datatables.net-buttons/js/buttons.html5.js');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces

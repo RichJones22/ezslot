@@ -34,6 +34,7 @@ Route::group([
  * )
  */
 Route::get('/closedSymbols', 'TransactionController@getSymbolsThatClosedForPeriod');
+
 Route::get('/getTradeDetails', function(){
 
     $results = [];
@@ -46,6 +47,7 @@ Route::get('/getTradeDetails', function(){
         $result['option_side'] = $row[3];
         $result['quantity'] = $row[4];
         $result['amount'] = $row[5];
+        $result['profits'] = $row[6];
         $results[] = $result;
     }
 
@@ -55,8 +57,8 @@ Route::get('/getTradeDetails', function(){
 
 function getData() {
     return [
-        ['2017-02-28', 'SWN', 'PUT', 'SELL', '4', '$500.00'],
-        ['2017-02-28', 'SWN', 'PUT', 'BUY', '4', '$800.00'],
-        ['2017-02-28', 'SWN', 'PUT', 'SELL', '6', '$1200.00'],
+        ['2016-02-28', 'SWN', 'PUT', 'SELL', '4', '500.00', '500.00'],
+        ['2016-04-01', 'SWN', 'PUT', 'BUY', '4',  '-800.00', ''],
+        ['2016-04-01', 'SWN', 'PUT', 'SELL', '6', '1200.00', '400.00'],
     ];
 }
