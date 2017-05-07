@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Entities\TransactionAggregateE;
 use App\Repositories\SymbolsE;
+use App\Repositories\SymbolsR;
 use App\Repositories\TransactionAggregateR;
 use DB;
 use Illuminate\Support\Collection;
@@ -61,7 +62,7 @@ class TransactionAggregateS
     {
         $monthsBack = CurrentDateTime::new()->daysBack(360);
 
-        $result = new Collection();
+        $result = $this->getNewCollection();
 
         $allSymbols = $this
             ->symbolS
@@ -339,5 +340,20 @@ class TransactionAggregateS
         } else {
             $transaction->setTradeClosed(false);
         }
+    }
+
+    /**
+     * derive collection off of symbols repo.
+     *
+     * @return Collection
+     */
+    private function getNewCollection(): Collection
+    {
+        /** @var SymbolsR $collection */
+        $collection = $this->symbolS->getSymbolsR();
+
+        $collection = $collection->getCollection();
+
+        return new $collection();
     }
 }
