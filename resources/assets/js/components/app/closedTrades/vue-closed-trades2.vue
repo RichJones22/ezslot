@@ -46,7 +46,9 @@
             let self = this;
 
             // start spinner
-            ezsNS.ezSlot.utils.spinner.spinnerById('example');
+            this.spinnerById('example');
+
+            // get data
             axios.get('/api/closedSymbols')
                 .then(function (response) {
 
@@ -57,7 +59,7 @@
                         let data1 = [];
                         data1.push(response.data[i].close_date);
                         data1.push(response.data[i].underlier_symbol);
-                        data1.push(ezsNS.ezSlot.utils.displayCurrency(response.data[i].profits, 2));
+                        data1.push(self.displayDollars(response.data[i].profits));
 
                         dataSet.push(data1);
                     }
@@ -119,6 +121,9 @@
                         }
                     });
 
+                    //stop spinner
+                    self.spinnerByIdStop();
+
                     // Add event listener for opening and closing details
                     $('#example tbody').on('click', 'td.details-control', function () {
                         let table = $('#example').DataTable();
@@ -136,16 +141,24 @@
                             tr.addClass('shown');
                         }
                     });
-
-                    //stop spinner
-                    ezsNS.ezSlot.utils.spinner.spinnerByIdStop();
                 }).catch(function (error) {
                     console.log(error);
-            });
+
+                    //stop spinner
+                    self.spinnerByIdStop();
+                })
+            ;
+
         },
         methods: {
             displayDollars: function(num) {
                 return ezsNS.ezSlot.utils.displayCurrency(num,2)
+            },
+            spinnerById: function(value) {
+                return ezsNS.ezSlot.utils.spinner.spinnerById(value);
+            },
+            spinnerByIdStop: function() {
+                return ezsNS.ezSlot.utils.spinner.spinnerByIdStop();
             }
         }
     }
