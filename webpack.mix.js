@@ -46,7 +46,8 @@ mix
     .combine(
         [
             './resources/assets/js/vendor/ezSlotNS.js',
-            './resources/assets/js/vendor/ezSlotUtils.js',
+            './resources/assets/js/vendor/ezs/ezSlotUtils.js',
+            './resources/assets/js/vendor/ezs/ezsSplashDetailTable.js',
             './resources/assets/js/vendor/spin/spin.js',
             'public/js/ezSlot.js',
             './resources/assets/js/vendor/startbootstrap-freelancer/js/freelancer.js',
