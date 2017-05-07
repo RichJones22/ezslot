@@ -132,7 +132,7 @@
                         }
                         else {
                             // Open this row
-                            row.child( ezsNS.ezSlot.SplashDetailTable.format() ).show();
+                            row.child( ezsNS.ezSlot.SplashDetailTable.format(row.data()) ).show();
                             tr.addClass('shown');
                         }
                     });
