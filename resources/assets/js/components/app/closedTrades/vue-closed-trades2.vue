@@ -67,6 +67,7 @@
                     $("#example").dataTable({
                         // data and table columns
                         data: dataSet,
+                        autoWidth: false,     // allow container styling to work.
                         columns: [
                             {
                                 "className":      'details-control',
