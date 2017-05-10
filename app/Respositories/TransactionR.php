@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Contracts\Repositories\BaseRepositoryContract;
 use App\Entities\BaseEntity;
-use App\Entities\TransactionE;
+use App\Entities\ClosedTradeE;
 use App\Models\OptionsHouseTransactionM;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
@@ -19,12 +19,12 @@ class TransactionR extends BaseRepository implements BaseRepositoryContract
     /**
      * TransactionR constructor.
      *
-     * @param TransactionE             $transactionE
+     * @param ClosedTradeE             $transactionE
      * @param OptionsHouseTransactionM $transactionM
      * @param Collection               $collection
      */
     public function __construct(
-        TransactionE $transactionE,
+        ClosedTradeE $transactionE,
         OptionsHouseTransactionM $transactionM,
         Collection $collection)
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\ServiceTests;
 
 use App\database\fixtures\SeedFixtureOptionsHouseTransaction;
-use App\Entities\TransactionE;
+use App\Entities\ClosedTradeE;
 use App\Models\OptionsHouseTransactionM;
 use App\Models\SymbolsM;
 use App\Repositories\SymbolsE;
@@ -42,14 +42,14 @@ class SymbolsServiceTest extends TestCase
                 new Collection()
             ),
             new TransactionR(
-                new TransactionE(),
+                new ClosedTradeE(),
                 new OptionsHouseTransactionM(),
                 new Collection()
             )
         );
 
         $this->transactionR = new TransactionR(
-            new TransactionE(),
+            new ClosedTradeE(),
             new OptionsHouseTransactionM(),
             new Collection()
         );

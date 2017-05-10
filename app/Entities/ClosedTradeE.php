@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entities;
 
-class TransactionE extends BaseEntity
+class ClosedTradeE extends BaseEntity
 {
     /** @var string */
     private $close_date;
@@ -45,9 +45,9 @@ class TransactionE extends BaseEntity
     /**
      * @param string $close_date
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setCloseDate(string $close_date): TransactionE
+    public function setCloseDate(string $close_date): ClosedTradeE
     {
         $this->close_date = $close_date;
 
@@ -65,9 +65,9 @@ class TransactionE extends BaseEntity
     /**
      * @param string $underlier_symbol
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setUnderlierSymbol(string $underlier_symbol): TransactionE
+    public function setUnderlierSymbol(string $underlier_symbol): ClosedTradeE
     {
         $this->underlier_symbol = $underlier_symbol;
 
@@ -85,9 +85,9 @@ class TransactionE extends BaseEntity
     /**
      * @param string $position_state
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setPositionState(string $position_state): TransactionE
+    public function setPositionState(string $position_state): ClosedTradeE
     {
         $this->position_state = $position_state;
 
@@ -105,9 +105,9 @@ class TransactionE extends BaseEntity
     /**
      * @param string $option_side
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setOptionSide(string $option_side): TransactionE
+    public function setOptionSide(string $option_side): ClosedTradeE
     {
         $this->option_side = $option_side;
 
@@ -125,9 +125,9 @@ class TransactionE extends BaseEntity
     /**
      * @param int $option_quantity
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setOptionQuantity(int $option_quantity): TransactionE
+    public function setOptionQuantity(int $option_quantity): ClosedTradeE
     {
         $this->option_quantity = $option_quantity;
 
@@ -145,9 +145,9 @@ class TransactionE extends BaseEntity
     /**
      * @param float $strike_price
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setStrikePrice(float $strike_price): TransactionE
+    public function setStrikePrice(float $strike_price): ClosedTradeE
     {
         $this->strike_price = $strike_price;
 
@@ -165,9 +165,9 @@ class TransactionE extends BaseEntity
     /**
      * @param string $expiration
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setExpiration(string $expiration): TransactionE
+    public function setExpiration(string $expiration): ClosedTradeE
     {
         $this->expiration = $expiration;
 
@@ -185,9 +185,9 @@ class TransactionE extends BaseEntity
     /**
      * @param float $amount
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setAmount(float $amount): TransactionE
+    public function setAmount(float $amount): ClosedTradeE
     {
         $this->amount = $amount;
 
@@ -205,9 +205,9 @@ class TransactionE extends BaseEntity
     /**
      * @param string $symbol
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setSymbol(string $symbol): TransactionE
+    public function setSymbol(string $symbol): ClosedTradeE
     {
         $this->symbol = $symbol;
 
@@ -225,9 +225,9 @@ class TransactionE extends BaseEntity
     /**
      * @param int $transaction_id
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setTransactionId(int $transaction_id): TransactionE
+    public function setTransactionId(int $transaction_id): ClosedTradeE
     {
         $this->transaction_id = $transaction_id;
 
@@ -245,9 +245,9 @@ class TransactionE extends BaseEntity
     /**
      * @param string $security_description
      *
-     * @return TransactionE
+     * @return ClosedTradeE
      */
-    public function setSecurityDescription(string $security_description): TransactionE
+    public function setSecurityDescription(string $security_description): ClosedTradeE
     {
         $this->security_description = $security_description;
 
