@@ -28,11 +28,11 @@ class SymbolsS implements SymbolsSContract
      * SymbolsS constructor.
      *
      * @param SymbolsR     $symbolsR
-     * @param TransactionR $transactionR
+     * @param ClosedTradeR $transactionR
      */
     public function __construct(
         SymbolsR $symbolsR,
-        TransactionR $transactionR
+        ClosedTradeR $transactionR
     ) {
         $this->setSymbolsR($symbolsR);
         $this->setTransactionR($transactionR);
@@ -125,7 +125,7 @@ class SymbolsS implements SymbolsSContract
      */
     protected function getSymbolsDataFromOptionHouseTransactionTable(): Collection
     {
-        /** @var TransactionR $repo */
+        /** @var ClosedTradeR $repo */
         $repo = $this->getTransactionR();
         $allSymbols = $repo->symbolsUnique();
 

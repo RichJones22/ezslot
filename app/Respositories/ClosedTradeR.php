@@ -12,12 +12,12 @@ use App\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
 
 /**
- * Class TransactionR.
+ * Class ClosedTradeR.
  */
-class TransactionR extends BaseRepository implements BaseRepositoryContract
+class ClosedTradeR extends BaseRepository implements BaseRepositoryContract
 {
     /**
-     * TransactionR constructor.
+     * ClosedTradeR constructor.
      *
      * @param ClosedTradeE             $transactionE
      * @param OptionsHouseTransactionM $transactionM

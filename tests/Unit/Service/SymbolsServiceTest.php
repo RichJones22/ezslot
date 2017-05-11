@@ -11,7 +11,7 @@ use App\Models\SymbolsM;
 use App\Repositories\SymbolsE;
 use App\Repositories\SymbolsR;
 use App\Services\SymbolsS;
-use App\Services\TransactionR;
+use App\Services\ClosedTradeR;
 use Artisan;
 use Carbon\Carbon;
 use DB;
@@ -28,7 +28,7 @@ class SymbolsServiceTest extends TestCase
 
     /** @var SymbolsS */
     private $symbolsS;
-    /** @var TransactionR */
+    /** @var ClosedTradeR */
     private $transactionR;
 
     public function setUp()
@@ -41,14 +41,14 @@ class SymbolsServiceTest extends TestCase
                 new SymbolsM(),
                 new Collection()
             ),
-            new TransactionR(
+            new ClosedTradeR(
                 new ClosedTradeE(),
                 new OptionsHouseTransactionM(),
                 new Collection()
             )
         );
 
-        $this->transactionR = new TransactionR(
+        $this->transactionR = new ClosedTradeR(
             new ClosedTradeE(),
             new OptionsHouseTransactionM(),
             new Collection()
