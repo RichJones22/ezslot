@@ -17,16 +17,9 @@ class CreateClosedTradeTable extends Migration
             $table->increments('id');
             $table->date('close_date');
             $table->string('underlier_symbol');
-            $table->string('security_description');
-            $table->string('position_state');
-            $table->string('option_side');
-            $table->integer('option_quantity')->nullable();
-            $table->float('strike_price');
-            $table->date('expiration')->nullable();
-            $table->float('amount');
-            $table->string('symbol');
-            $table->bigInteger('transaction_id')->unique();
+            $table->json('trade_details');
             $table->timestamps();
+            $table->unique(['close_date', 'underlier_symbol']);
         });
     }
 

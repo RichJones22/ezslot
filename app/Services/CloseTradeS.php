@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entities\ClosedTradeE;
+use App\Entities\TransactionAggregateE;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+
 /**
  * Class CloseTradeS.
  */
@@ -12,35 +17,132 @@ class CloseTradeS
     /**
      * @var ClosedTradeR
      */
-    private $transactionR;
+    private $closedTradeR;
 
     /**
      * CloseTradeS constructor.
      *
-     * @param ClosedTradeR $transactionR
+     * @param ClosedTradeR $closedTradeR
      */
-    public function __construct(ClosedTradeR $transactionR)
+    public function __construct(ClosedTradeR $closedTradeR)
     {
-        $this->setTransactionR($transactionR);
+        $this->setClosedTradeR($closedTradeR);
+    }
+
+    /**
+     * @param Collection $collection
+     *
+     * @return $this
+     */
+    public function persist(Collection $collection)
+    {
+        // if record exist; early exist.
+        if ($this->doesClosedTradeExists($collection)) {
+            return $this;
+        }
+
+        DB::Transaction(function () use ($collection) {
+            $details = [];
+
+            foreach ($collection as $transactionAggregateE) {
+                $details[] = $this->buildDetails($transactionAggregateE);
+            }
+
+            $closedTradeE = $this->getClosedTradeR()->getEntity();
+            $closedTradeE = get_class($closedTradeE);
+            $closedTradeE = new $closedTradeE();
+
+            $this->populateClosedTradeE($closedTradeE, $collection, $details);
+
+            $closedTradeR = $this->getClosedTradeR();
+            $closedTradeR->persistEntity($closedTradeE);
+        });
+
+        return $this;
+    }
+
+    /**
+     * @param Collection $collection
+     *
+     * @return int
+     */
+    public function doesClosedTradeExists(Collection $collection)
+    {
+        // get the max transaction
+        $transactionAggregateE = $collection->max(function (TransactionAggregateE $x) {
+            return $x;
+        });
+
+        $closeDate = $transactionAggregateE->getCloseDate();
+        $underlier_symbol = $transactionAggregateE->getUnderlierSymbol();
+
+        $results = $this
+            ->getClosedTradeR()
+            ->getClosedTradeByDateAndSymbol($closeDate, $underlier_symbol)
+            ->all();
+
+        return count($results);
     }
 
     /**
      * @return ClosedTradeR
      */
-    public function getTransactionR(): ClosedTradeR
+    public function getClosedTradeR(): ClosedTradeR
     {
-        return $this->transactionR;
+        return $this->closedTradeR;
     }
 
     /**
-     * @param ClosedTradeR $transactionR
+     * @param ClosedTradeR $closedTradeR
      *
      * @return CloseTradeS
      */
-    public function setTransactionR(ClosedTradeR $transactionR): CloseTradeS
+    public function setClosedTradeR(ClosedTradeR $closedTradeR): CloseTradeS
     {
-        $this->transactionR = $transactionR;
+        $this->closedTradeR = $closedTradeR;
 
         return $this;
+    }
+
+    /**
+     * @param ClosedTradeE $closedTradeE
+     * @param Collection   $collection
+     * @param array        $details
+     */
+    protected function populateClosedTradeE(ClosedTradeE $closedTradeE, Collection $collection, array $details)
+    {
+        // get the max transaction
+        $transactionAggregateE = $collection->max(function (TransactionAggregateE $x) {
+            return $x;
+        });
+
+        $closedTradeE->setCloseDate($transactionAggregateE->getCloseDate());
+        $closedTradeE->setUnderlierSymbol($transactionAggregateE->getUnderlierSymbol());
+
+        $closedTradeE->setTradeDetails(json_encode($details));
+    }
+
+    /**
+     * @param TransactionAggregateE $transactionAggregateE
+     *
+     * @return array
+     */
+    protected function buildDetails(TransactionAggregateE $transactionAggregateE)
+    {
+        return [
+            'close_date' => $transactionAggregateE->getCloseDate(),
+            'underlier_symbol' => $transactionAggregateE->getUnderlierSymbol(),
+            'security_description' => $transactionAggregateE->getSecurityDescription(),
+            'position_state' => $transactionAggregateE->getPositionState(),
+            'option_side' => $transactionAggregateE->getOptionSide(),
+            'option_type' => $transactionAggregateE->getOptionType(),
+            'option_quantity' => $transactionAggregateE->getOptionQuantity(),
+            'strike_price' => $transactionAggregateE->getStrikePrice(),
+            'expiration' => $transactionAggregateE->getExpiration(),
+            'amount' => $transactionAggregateE->getAmount(),
+            'profits' => $transactionAggregateE->getProfits(),
+            'symbol' => $transactionAggregateE->getSymbol(),
+            'transaction_id' => $transactionAggregateE->getTransactionId(),
+        ];
     }
 }

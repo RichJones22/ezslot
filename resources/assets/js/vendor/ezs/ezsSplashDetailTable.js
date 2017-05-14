@@ -13,9 +13,19 @@ ezsNS.ezSlot.SplashDetailTable = {
         let table = document.createElement('table'), tr, total=0;
         table.setAttribute("style", "float:right");
 
+        let closeDate = rowData[0];
+        let symbol = rowData[1];
+
         axios
-            .get('/api/getTradeDetails')
+            .get('/api/getTradeDetails', {
+                params: {
+                    'close_date': closeDate,
+                    'symbol': symbol,
+                }
+            })
             .then(function (response) {
+
+                response.data = JSON.parse(response.data[0].trade_details);
 
                 // first header.
                 ezsNS.ezSlot.SplashDetailTable.iTblHeader01(table);
@@ -25,10 +35,10 @@ ezsNS.ezSlot.SplashDetailTable = {
                     tr = document.createElement('tr');
                     //
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].close_date);
-                    ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].underlier_symbol);
+                    // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].underlier_symbol);
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_type);
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_side);
-                    ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].quantity  + "&nbsp","right-align");
+                    ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_quantity  + "&nbsp","right-align");
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,ezsNS.ezSlot.SplashDetailTable.displayDollars(ezsNS.ezSlot.SplashDetailTable.ParseIntOrEmptyString(response.data[i].amount)) + "&nbsp", "right-align");
 
                     let value = ezsNS.ezSlot.SplashDetailTable.ParseIntOrEmptyString(response.data[i].profits);
@@ -48,7 +58,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         return table;
     },
     ParseIntOrEmptyString: function(value) {
-        let intValue = parseInt(value);
+        let intValue = parseFloat(value);
 
         if (isNaN(intValue)) {
             return "";
@@ -73,7 +83,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         tr = document.createElement('tr');
         //
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"close Date &nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"symbols &nbsp");
+        // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"symbols &nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"type &nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"side &nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"qty&nbsp");
@@ -86,7 +96,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         tr = document.createElement('tr');
         //
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"===========&nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"========&nbsp");
+        // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"========&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"=====&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"=====&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"===&nbsp");
@@ -99,7 +109,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         tr = document.createElement('tr');
         //
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
+        // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
@@ -112,7 +122,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         tr = document.createElement('tr');
         //
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
+        // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
