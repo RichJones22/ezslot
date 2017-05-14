@@ -6,7 +6,10 @@ namespace App\Services;
 
 use App\Contracts\Repositories\SymbolsRContract;
 use App\Contracts\Services\SymbolsSContract;
+use App\Entities\TransactionAggregateE;
+use App\Repositories\SymbolsE;
 use App\Repositories\SymbolsR;
+use App\Repositories\TransactionAggregateR;
 use Illuminate\Support\Collection;
 
 /**
@@ -27,12 +30,12 @@ class SymbolsS implements SymbolsSContract
     /**
      * SymbolsS constructor.
      *
-     * @param SymbolsR     $symbolsR
-     * @param ClosedTradeR $transactionR
+     * @param SymbolsR              $symbolsR
+     * @param TransactionAggregateR $transactionR
      */
     public function __construct(
         SymbolsR $symbolsR,
-        ClosedTradeR $transactionR
+        TransactionAggregateR $transactionR
     ) {
         $this->setSymbolsR($symbolsR);
         $this->setTransactionR($transactionR);
@@ -125,18 +128,24 @@ class SymbolsS implements SymbolsSContract
      */
     protected function getSymbolsDataFromOptionHouseTransactionTable(): Collection
     {
-        /** @var ClosedTradeR $repo */
         $repo = $this->getTransactionR();
         $allSymbols = $repo->symbolsUnique();
 
         /** @var SymbolsR $repo */
         $repo = $this->getSymbolsR();
-        $symbolE = $repo->getEntity();
 
         $collection = $repo->getCollection();
 
+        /** @var TransactionAggregateE $transactionE */
         foreach ($allSymbols as $transactionE) {
-            $collection->push($symbolE->translateByEntity($transactionE));
+            /** @var SymbolsE $symbolE */
+            $symbolE = $repo->getEntity();
+            $symbolE = new $symbolE();
+
+            $symbolE->setUnderlierSymbol($transactionE->getUnderlierSymbol());
+            $symbolE->setSecurityDescription($transactionE->getSecurityDescription());
+
+            $collection->push($symbolE);
         }
 
         return $collection;

@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Contracts\Repositories\BaseRepositoryContract;
 use App\Entities\BaseEntity;
 use App\Entities\ClosedTradeE;
-use App\Models\OptionsHouseTransactionM;
+use App\Models\ClosedTradeM;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
 
@@ -19,35 +19,28 @@ class ClosedTradeR extends BaseRepository implements BaseRepositoryContract
     /**
      * ClosedTradeR constructor.
      *
-     * @param ClosedTradeE             $transactionE
-     * @param OptionsHouseTransactionM $transactionM
-     * @param Collection               $collection
+     * @param ClosedTradeE $closedTradeE
+     * @param ClosedTradeM $closedTradeM
+     * @param Collection   $collection
      */
     public function __construct(
-        ClosedTradeE $transactionE,
-        OptionsHouseTransactionM $transactionM,
+        ClosedTradeE $closedTradeE,
+        ClosedTradeM $closedTradeM,
         Collection $collection)
     {
-        /* @var BaseEntity $transactionE */
-        parent::__construct($transactionE, $transactionM, $collection);
+        /* @var BaseEntity $closedTradeE */
+        parent::__construct($closedTradeE, $closedTradeM, $collection);
     }
 
-    /**
-     * @return Collection
-     */
-    public function symbolsUnique(): Collection
+    public function getClosedTradeByDateAndSymbol(string $closeDate, string $symbol)
     {
         $collection = $this->getModel()
             ->newQuery()
-            ->select('underlier_symbol', 'security_description')
-            ->groupBy('underlier_symbol', 'security_description')
-            ->where('underlier_symbol', '<>', '')
-            ->where('close_date', '>', self::FROM_DATE)
+            ->select('close_date', 'underlier_symbol', 'trade_details')
+            ->where('close_date', '=', $closeDate)
+            ->where('underlier_symbol', '=', $symbol)
             ->get()
         ;
-
-        // remove duplicates...
-        $collection = $collection->unique('underlier_symbol');
 
         return $this->hydrateEntity($collection);
     }
