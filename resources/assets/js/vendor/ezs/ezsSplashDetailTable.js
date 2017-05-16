@@ -39,6 +39,7 @@ ezsNS.ezSlot.SplashDetailTable = {
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_type);
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_side);
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_quantity  + "&nbsp","right-align");
+                    ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].strike_price  + "&nbsp","right-align");
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,ezsNS.ezSlot.SplashDetailTable.displayDollars(ezsNS.ezSlot.SplashDetailTable.ParseIntOrEmptyString(response.data[i].amount)) + "&nbsp", "right-align");
 
                     let value = ezsNS.ezSlot.SplashDetailTable.ParseIntOrEmptyString(response.data[i].profits);
@@ -87,6 +88,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"type&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"side&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"qty&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"strike&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"amount&nbsp","right-align");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"profit&nbsp","right-align");
     },
@@ -100,6 +102,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"====&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"====&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"===&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"======&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"============&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"============&nbsp");
     },
@@ -114,6 +117,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"============&nbsp");
     },
     iTblFooter02: function(table, total) {
@@ -123,6 +127,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         //
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
