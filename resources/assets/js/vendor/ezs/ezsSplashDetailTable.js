@@ -82,26 +82,26 @@ ezsNS.ezSlot.SplashDetailTable = {
 
         tr = document.createElement('tr');
         //
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"close Date &nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"close Date&nbsp");
         // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"symbols &nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"type &nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"side &nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"type&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"side&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"qty&nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"amount &nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"profit &nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"amount&nbsp","right-align");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"profit&nbsp","right-align");
     },
     iTblHeader02: function (table) {
         let tr;
 
         tr = document.createElement('tr');
         //
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"===========&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"==========&nbsp");
         // ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"========&nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"=====&nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"=====&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"====&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"====&nbsp");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"===&nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"=========&nbsp");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"========&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"============&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"============&nbsp");
     },
     iTblFooter01: function(table, total) {
         let tr;
@@ -114,7 +114,7 @@ ezsNS.ezSlot.SplashDetailTable = {
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
         ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"");
-        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"========&nbsp");
+        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,"============&nbsp");
     },
     iTblFooter02: function(table, total) {
         let tr;
