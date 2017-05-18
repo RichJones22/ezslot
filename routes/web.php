@@ -15,8 +15,28 @@
 Route::get('/', function () {
     return view('splash');
 });
-
-//Route::get('/', 'WelcomeController@show');
 //
 Route::get('/home', 'HomeController@show');
+
+
+/*
+ * --------------------------------------------------------------------------------------------------------------------
+ * barryvdh testing routes.
+ *
+ * - these need to be converted to a testing controller, and view to show tests to run...
+ *
+ * --------------------------------------------------------------------------------------------------------------------
+ */
+Route::get('/testSymbolsUnique','SymbolsController@testSymbolsUnique');
+Route::get('/testPopulateSymbolsTable','SymbolsController@testPopulateSymbolsTable');
+
+
+/*
+ * --------------------------------------------------------------------------------------------------------------------
+ * API Docs (Swagger)
+ * --------------------------------------------------------------------------------------------------------------------
+ */
+Route::get('/api-docs', 'ApiDocController@index');
+Route::get('/api-docs/getdocs', 'ApiDocController@getDocs');
+
 
