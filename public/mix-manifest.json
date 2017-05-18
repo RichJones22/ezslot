@@ -1,6 +1,7 @@
 {
   "/js/app.js": "/js/app.js",
+  "/js/ezSlot.js": "/js/ezSlot.js",
+  "/mix.js": "/mix.js",
   "/css/app.css": "/css/app.css",
-  "/css/ezSlot.css": "/css/ezSlot.css",
-  "/js/ezSlot.js": "/js/ezSlot.js"
+  "/css/ezSlot.css": "/css/ezSlot.css"
 }

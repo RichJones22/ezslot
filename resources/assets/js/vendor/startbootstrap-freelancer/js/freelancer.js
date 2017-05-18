@@ -1,7 +1,7 @@
 // Freelancer Theme JavaScript
 
-rgNS.namespace('freelancer');
-rgNS.freelancer = {
+ezsNS.namespace('freelancer');
+ezsNS.freelancer = {
     easing: function () {
         "use strict"; // Start of use strict
 

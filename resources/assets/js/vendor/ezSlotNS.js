@@ -1,9 +1,9 @@
 /*
-    rgNS used for rateGenius application namespacing
+    ezsNS used for ezSlot application nameSpacing
 
-    file name: rateGeniusNS.js
+    file name: ezSlotNS.js
  */
-let rgNS = {
+let ezsNS = {
     namespace: function() {
         let a = arguments, o = null, i, j, d;
         for (i = 0; i < a.length; i++) {
