@@ -79,13 +79,12 @@ abstract class BaseRepository implements BaseRepositoryContract
                 // derive attribute name from getter name.
                 $attributeName = str::snake(substr($method, strlen('get'), (strlen($method) - strlen('get'))));
 
-                // derive method getter for attribute.
-                $method = 'get'.ucfirst(str::camel($attributeName));
-
+                // set attribute on model
                 $model->setAttribute($attributeName, $entity->$method());
             }
         }
 
+        // persist model
         $model->save();
 
         return $this;
