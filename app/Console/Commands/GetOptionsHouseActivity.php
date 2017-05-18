@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Premise\Utilities\PremiseUtilities;
 
 /**
@@ -66,6 +67,9 @@ class GetOptionsHouseActivity extends Command
         if (empty($files)) {
             return $this;
         }
+
+        // bust the cache
+        cache::forget('getAllPutTrades');
 
         foreach ($files as $file) {
             // derive transactions array per file.

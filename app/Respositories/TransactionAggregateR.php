@@ -53,8 +53,8 @@ class TransactionAggregateR
         TransactionAggregateE $aggregateE
     ) {
         $this->model = $optionsHouseTransaction;
-        $this->TransactionAggregateE = $aggregateE;
         $this->collection = $collection;
+        $this->TransactionAggregateE = $aggregateE;
     }
 
     /**
@@ -69,8 +69,10 @@ class TransactionAggregateR
             ->select(
                 'close_date',
                 'underlier_symbol',
+                'security_description',
                 'position_state',
                 'option_side',
+                'option_type',
                 'option_quantity',
                 'strike_price',
                 'expiration',
@@ -180,6 +182,25 @@ class TransactionAggregateR
             ->get();
 
         return $counts;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function symbolsUnique(): Collection
+    {
+        $collection = DB::table('options_house_transaction')
+            ->select('underlier_symbol', 'security_description')
+            ->groupBy('underlier_symbol', 'security_description')
+            ->where('underlier_symbol', '<>', '')
+            ->where('close_date', '>', $this->fromDate)
+            ->get()
+        ;
+
+        // remove duplicates...
+        $collection = $collection->unique('underlier_symbol');
+
+        return $this->hydrate($collection);
     }
 
     /**

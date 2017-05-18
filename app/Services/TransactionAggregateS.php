@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Entities\TransactionAggregateE;
 use App\Repositories\SymbolsE;
+use App\Repositories\SymbolsR;
 use App\Repositories\TransactionAggregateR;
 use DB;
 use Illuminate\Support\Collection;
@@ -24,19 +25,26 @@ class TransactionAggregateS
      * @var SymbolsS
      */
     private $symbolS;
+    /**
+     * @var CloseTradeS
+     */
+    private $closeTradeS;
 
     /**
      * TransactionAggregateS constructor.
      *
      * @param TransactionAggregateR $aggregateR
      * @param SymbolsS              $symbolService
+     * @param CloseTradeS           $closeTradeS
      */
     public function __construct(
         TransactionAggregateR $aggregateR,
-        SymbolsS $symbolService
+        SymbolsS $symbolService,
+        CloseTradeS $closeTradeS
     ) {
-        $this->aggregateR = $aggregateR;
-        $this->symbolS = $symbolService;
+        $this->setAggregateR($aggregateR);
+        $this->setSymbolS($symbolService);
+        $this->setCloseTradeS($closeTradeS);
     }
 
     /**
@@ -59,9 +67,9 @@ class TransactionAggregateS
      */
     public function getAllPutTrades(): Collection
     {
-        $monthsBack = CurrentDateTime::new()->daysBack(360);
+        $monthsBack = CurrentDateTime::new()->daysBack(720);
 
-        $result = new Collection();
+        $result = $this->getNewCollection();
 
         $allSymbols = $this
             ->symbolS
@@ -97,6 +105,66 @@ class TransactionAggregateS
         });
 
         return $tmp;
+    }
+
+    /**
+     * @return TransactionAggregateR
+     */
+    public function getAggregateR(): TransactionAggregateR
+    {
+        return $this->aggregateR;
+    }
+
+    /**
+     * @param TransactionAggregateR $aggregateR
+     *
+     * @return TransactionAggregateS
+     */
+    public function setAggregateR(TransactionAggregateR $aggregateR): TransactionAggregateS
+    {
+        $this->aggregateR = $aggregateR;
+
+        return $this;
+    }
+
+    /**
+     * @return SymbolsS
+     */
+    public function getSymbolS(): SymbolsS
+    {
+        return $this->symbolS;
+    }
+
+    /**
+     * @param SymbolsS $symbolS
+     *
+     * @return TransactionAggregateS
+     */
+    public function setSymbolS(SymbolsS $symbolS): TransactionAggregateS
+    {
+        $this->symbolS = $symbolS;
+
+        return $this;
+    }
+
+    /**
+     * @return CloseTradeS
+     */
+    public function getCloseTradeS(): CloseTradeS
+    {
+        return $this->closeTradeS;
+    }
+
+    /**
+     * @param CloseTradeS $closeTradeS
+     *
+     * @return TransactionAggregateS
+     */
+    public function setCloseTradeS(CloseTradeS $closeTradeS): TransactionAggregateS
+    {
+        $this->closeTradeS = $closeTradeS;
+
+        return $this;
     }
 
     /**
@@ -247,19 +315,32 @@ class TransactionAggregateS
      */
     protected function determineTradeProfits(Collection $transactions, $tradeProfit): Collection
     {
+        /** @var CloseTradeS $service */
+        $closeTradeS = $this->getCloseTradeS();
+        /** @var Collection $closedTradesColl */
+        $closedTradesColl = $closeTradeS->getClosedTradeR()->getCollection();
+        $closedTradesColl = new $closedTradesColl();
+
         $count = $transactions->count();
         $i = 0;
         /** @var TransactionAggregateE $transaction */
         foreach ($transactions as $transaction) {
             $tradeProfit += $transaction->getAmount();
+            $transaction->setTradeClosed(false);
 
             if ($this->didTradeEnd($transaction, $count, $i)) {
                 $transaction->setProfits($tradeProfit);
                 $tradeProfit = 0;
-
                 $this->setTradeCloseValue($transaction);
+                $closedTradesColl->push($transaction);
+
+                if ($transaction->getTradeClosed()) {
+                    $closeTradeS->persist($closedTradesColl);
+                }
+                $closedTradesColl = new $closedTradesColl();
             } else {
                 $transaction->setProfits(0);
+                $closedTradesColl->push($transaction);
             }
             ++$i;
         }
@@ -339,5 +420,20 @@ class TransactionAggregateS
         } else {
             $transaction->setTradeClosed(false);
         }
+    }
+
+    /**
+     * derive collection off of symbols repo.
+     *
+     * @return Collection
+     */
+    private function getNewCollection(): Collection
+    {
+        /** @var SymbolsR $collection */
+        $collection = $this->symbolS->getSymbolsR();
+
+        $collection = $collection->getCollection();
+
+        return new $collection();
     }
 }
