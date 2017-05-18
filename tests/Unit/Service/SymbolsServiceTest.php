@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Tests\Unit\ServiceTests;
 
 use App\database\fixtures\SeedFixtureOptionsHouseTransaction;
-use App\Entities\TransactionE;
+use App\Entities\TransactionAggregateE;
 use App\Models\OptionsHouseTransactionM;
 use App\Models\SymbolsM;
 use App\Repositories\SymbolsE;
 use App\Repositories\SymbolsR;
+use App\Repositories\TransactionAggregateR;
 use App\Services\SymbolsS;
-use App\Services\TransactionR;
 use Artisan;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 /**
  * Class SymbolsServiceTest.
@@ -28,7 +28,7 @@ class SymbolsServiceTest extends TestCase
 
     /** @var SymbolsS */
     private $symbolsS;
-    /** @var TransactionR */
+    /** @var TransactionAggregateR */
     private $transactionR;
 
     public function setUp()
@@ -41,21 +41,20 @@ class SymbolsServiceTest extends TestCase
                 new SymbolsM(),
                 new Collection()
             ),
-            new TransactionR(
-                new TransactionE(),
+            new TransactionAggregateR(
                 new OptionsHouseTransactionM(),
-                new Collection()
+                new Collection(),
+                new TransactionAggregateE()
             )
         );
 
-        $this->transactionR = new TransactionR(
-            new TransactionE(),
+        $this->transactionR = new TransactionAggregateR(
             new OptionsHouseTransactionM(),
-            new Collection()
+            new Collection(),
+            new TransactionAggregateE()
         );
 
         Artisan::call('db:seed', ['--class' => SeedFixtureOptionsHouseTransaction::class]);
-
     }
 
     public function tearDown()
@@ -92,7 +91,7 @@ class SymbolsServiceTest extends TestCase
 
         // verify that we are using sqlite_testing db...
         $config = DB::getConfig();
-        $this->assertEquals('sqlite_testing', $config['name']);
+        $this->assertSame('sqlite_testing', $config['name']);
 
         // check to make sure the options_house_transaction table is not empty.
         $count1 = DB::table('options_house_transaction')->count();
@@ -122,7 +121,7 @@ class SymbolsServiceTest extends TestCase
             $count = DB::table('options_house_transaction')->count();
 
             // check to make sure the options_house_transaction table is empty.
-            $this->assertEquals(0, $count);
+            $this->assertSame(0, $count);
 
             // get symbols from the symbols table; only the symbols table and not the options_house_transaction table
             // should have records.
@@ -137,6 +136,6 @@ class SymbolsServiceTest extends TestCase
         $count2 = DB::table('options_house_transaction')->count();
 
         // check to make sure the options_house_transaction table is not empty.
-        $this->assertEquals($count1, $count2);
+        $this->assertSame($count1, $count2);
     }
 }

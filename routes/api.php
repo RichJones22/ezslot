@@ -34,3 +34,5 @@ Route::group([
  * )
  */
 Route::get('/closedSymbols', 'TransactionController@getSymbolsThatClosedForPeriod');
+
+Route::get('/getTradeDetails','ClosedTradeController@getTradeDetails');
