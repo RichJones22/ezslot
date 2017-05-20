@@ -30,6 +30,7 @@ Route::get('/home', 'HomeController@show');
 Route::get('/testSymbolsUnique','SymbolsController@testSymbolsUnique');
 Route::get('/testPopulateSymbolsTable','SymbolsController@testPopulateSymbolsTable');
 
+Route::post('/welcomeEmail', 'EmailController@welcomeEmail');
 
 /*
  * --------------------------------------------------------------------------------------------------------------------
