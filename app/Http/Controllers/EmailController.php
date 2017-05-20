@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WelcomeEmailRequest;
 use App\Mail\Welcome;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
@@ -37,11 +38,11 @@ class EmailController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param WelcomeEmailRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function welcomeEmail(Request $request)
+    public function welcomeEmail(WelcomeEmailRequest $request)
     {
         // need to create the Welcome email first
         $welcomeEmail = $this->getWelcomeEmail();
