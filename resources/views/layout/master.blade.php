@@ -15,7 +15,9 @@
 @include('nav.topNav')
 
 <!-- page content -->
-@yield('content')
+<div id="vueAppScope">
+    @yield('content')
+</div>
 
 <!-- site footer -->
 @include('footer.appFooter')
