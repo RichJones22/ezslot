@@ -50,7 +50,15 @@
                                 {{ csrf_field() }}
                                 <label>Email Address</label>
                                 <input name="email" type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address."/>
-                                <p class="help-block text-danger"></p>
+
+                                @if($errors->first('email'))
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <li>{{$errors->first('email')}}</li>
+                                            {{--<p class="help-block text-danger">{{$errors->first('email')}}</p>--}}
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <br>
