@@ -41,7 +41,6 @@
         },
         mounted() {
             console.log('welcome-leads-email Component is  ready.');
-            console.log('csrf is: ' + this.csrf);
 
             let self = this;
 
@@ -76,6 +75,14 @@
                     .catch(function (error) {
                         if (typeof error.response.data.email !== 'undefined') {
                             self.emailError = error.response.data.email[0]
+                        } else {
+                            // get sweet alert error.
+                            function getErrorLocation(){
+                                try { throw Error('') } catch(err) { return err; }
+                            }
+                            let local = getErrorLocation();
+                            let msg = local.stack;
+                            sweet(error.message, msg, "error");
                         }
                     })
                 ;
