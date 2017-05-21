@@ -1,9 +1,7 @@
 @component('mail::message')
 # Welcome to Swing Low Option Trading
 
-Thanks for signing up... You will receive an email alert notifying you of both open and closed trades they happen...
-
-
+Thanks for signing up... You are now registered to receive email alerts when trades close...
 
 Thanks,<br>
 {{ config('app.name') }}
