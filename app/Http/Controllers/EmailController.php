@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WelcomeEmailRequest;
 use App\Mail\Welcome;
-use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
 
 /**
