@@ -31,7 +31,6 @@
     let sweet = require('sweetalert');
 
     export default {
-        props: ['csrf'],
         data(){
             return{
                 leads: [],
@@ -49,7 +48,6 @@
                 self.emailError = false;
                 $('#email').css('caret-color', 'red');
             });
-
         },
         methods: {
             formPost: function(e) {
@@ -60,7 +58,6 @@
                 axios
                     .post('/welcomeEmail', {
                         email: self.email,
-//                        _token: self.csrf  // curious about this; the framework is setting this somewhere?
                     })
                     .then(function (response) {
                         self.email = null;
