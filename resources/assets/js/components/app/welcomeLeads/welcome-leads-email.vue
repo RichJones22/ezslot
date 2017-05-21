@@ -7,7 +7,7 @@
 
                 <div v-if="emailError" v-bind="emailError">
                     <ul>
-                        <li id="emailError" class="alert alert-danger">{{emailError}}</li>
+                        <li id="emailError" class="alert alert-danger mt-error">{{emailError}}</li>
                     </ul>
                 </div>
             </div>
@@ -21,10 +21,14 @@
         </div>
     </form>
 </template>
-
+<style>
+    .mt-error {
+        margin-top: 2rem;
+    }
+</style>
 <script>
 
-    var sweet = require('sweetalert');
+    let sweet = require('sweetalert');
 
     export default {
         props: ['csrf'],
@@ -41,7 +45,7 @@
 
             let self = this;
 
-            // remove error text once use enters email field.
+            // remove error text once user enters email field.
             $('#email').focus(function(){
                 self.emailError = false;
                 $('#email').css('caret-color', 'red');
@@ -63,8 +67,8 @@
                         self.email = null;
                         self.emailError = false;
                         sweet({
-                            title: "Email Sent",
-                            text: "Thanks!",
+                            title: "Thanks!",
+                            text: "Email Sent...",
                             timer: 4000,
                             showConfirmButton: true
                         });
