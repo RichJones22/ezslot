@@ -60,7 +60,7 @@
                 axios
                     .post('/welcomeEmail', {
                         email: self.email,
-                        _token: self.csrf
+//                        _token: self.csrf  // curious about this; the framework is setting this somewhere?
                     })
                     .then(function (response) {
                         self.email = null;
