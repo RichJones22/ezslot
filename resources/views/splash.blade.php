@@ -42,7 +42,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <welcome-leads-email csrf="{{csrf_token()}}"></welcome-leads-email>
+                    <welcome-leads-email></welcome-leads-email>
                 </div>
             </div>
         </div>
