@@ -69,6 +69,7 @@ mix
     .sass('./resources/assets/sass/app.scss', 'css/ezSlot.css')
     .combine([
         './resources/assets/sass/vendor/dataTablesJQuery/datatables.min.css',
+        './resources/assets/sass/vendor/sweetAlert/sweetalert.css',
         'public/css/ezSlot.css'
     ], 'public/css/ezSlot.css')
     .copy('resources/assets/img/details_close.png', 'public/img/detail_close.png')

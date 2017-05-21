@@ -23,6 +23,9 @@
 </template>
 
 <script>
+
+    var sweet = require('sweetalert');
+
     export default {
         props: ['csrf'],
         data(){
@@ -41,6 +44,7 @@
             // remove error text once use enters email field.
             $('#email').focus(function(){
                 self.emailError = false;
+                $('#email').css('caret-color', 'red');
             });
 
         },
@@ -58,6 +62,12 @@
                     .then(function (response) {
                         self.email = null;
                         self.emailError = false;
+                        sweet({
+                            title: "Email Sent",
+                            text: "Thanks!",
+                            timer: 4000,
+                            showConfirmButton: true
+                        });
                     })
                     .catch(function (error) {
                         if (typeof error.response.data.email !== 'undefined') {
