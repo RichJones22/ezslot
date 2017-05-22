@@ -31,6 +31,7 @@ Route::get('/testSymbolsUnique','SymbolsController@testSymbolsUnique');
 Route::get('/testPopulateSymbolsTable','SymbolsController@testPopulateSymbolsTable');
 
 Route::post('/welcomeEmail', 'EmailController@welcomeEmail');
+Route::get('/getAllWelcomeEmailLeads', 'EmailController@getAllWelcomeEmailLeads');
 
 /*
  * --------------------------------------------------------------------------------------------------------------------
