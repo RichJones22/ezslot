@@ -1,24 +1,25 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class Welcome extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
-     * Create a new message instance.
-     *
-     * @return void
+     * Welcome constructor.
      */
     public function __construct()
     {
-        //
+    }
+
+    public function setFromEmailAddress(string $fromEmailAddress, string $fromEmailName)
+    {
+        $this->from($fromEmailAddress, $fromEmailName);
     }
 
     /**
@@ -28,6 +29,7 @@ class Welcome extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.welcome');
+        return $this
+            ->markdown('email.welcome');
     }
 }
