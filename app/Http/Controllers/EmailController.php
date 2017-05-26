@@ -53,14 +53,14 @@ class EmailController extends Controller
      */
     public function welcomeEmail(WelcomeEmailRequest $request)
     {
-        // need to create the Welcome email first
-        $welcomeEmail = $this->getWelcomeEmail();
+        // build welcome email
+        $welcomeEmail = $this->buildWelcomeEmail();
 
-        // save the email address
+        // save the email address to db
         $this->getWelcomeEmailLeadsS()
             ->persistEmail($request);
 
-        // send/queue the email.
+        // send/queue the email
         $this->getMailer()
             ->to($request->get('email'))
             ->queue($welcomeEmail);
@@ -173,5 +173,18 @@ class EmailController extends Controller
         }
 
         return $result;
+    }
+
+    /**
+     * @return Welcome
+     */
+    protected function buildWelcomeEmail(): Welcome
+    {
+        // need to create the Welcome email first
+        /** @var Welcome $welcomeEmail */
+        $welcomeEmail = $this->getWelcomeEmail();
+        $welcomeEmail->setFromEmailAddress('noreply@swinglowoptiontrading.com', 'NoReply');
+
+        return $welcomeEmail;
     }
 }
