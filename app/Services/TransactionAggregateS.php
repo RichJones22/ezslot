@@ -309,12 +309,13 @@ class TransactionAggregateS
 
     /**
      * @param Collection $transactions
-     * @param $tradeProfit
      *
      * @return Collection
      */
-    protected function determineTradeProfits(Collection $transactions, $tradeProfit): Collection
+    protected function determineTradeProfits(Collection $transactions): Collection
     {
+        $tradeProfit = 0;
+
         /** @var CloseTradeS $service */
         $closeTradeS = $this->getCloseTradeS();
         /** @var Collection $closedTradesColl */
@@ -329,14 +330,14 @@ class TransactionAggregateS
             $transaction->setTradeClosed(false);
 
             if ($this->didTradeEnd($transaction, $count, $i)) {
-                $transaction->setProfits($tradeProfit);
-                $tradeProfit = 0;
                 $this->setTradeCloseValue($transaction);
                 $closedTradesColl->push($transaction);
 
                 if ($transaction->getTradeClosed()) {
                     $closeTradeS->persist($closedTradesColl);
                 }
+                $transaction->setProfits($tradeProfit);
+                $tradeProfit = 0;
                 $closedTradesColl = new $closedTradesColl();
             } else {
                 $transaction->setProfits(0);
@@ -390,8 +391,6 @@ class TransactionAggregateS
      */
     protected function getBySymbolTransaction($symbol): Collection
     {
-        $tradeProfit = 0;
-
         // get all trades by symbol
         $CollectionAggregateE = $this
             ->aggregateR
@@ -405,7 +404,7 @@ class TransactionAggregateS
 
         // calculate trade breaks and profits per trade
         /* @var TransactionAggregateE $transaction */
-        $this->determineTradeProfits($transactions, $tradeProfit);
+        $this->determineTradeProfits($transactions);
 
         return $transactions;
     }
