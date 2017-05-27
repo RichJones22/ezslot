@@ -77,7 +77,7 @@
                             },
                             { data: 0 },
                             { data: 1 },
-                            { data: 2, "class": "right-aligit gn" },
+                            { data: 2, "class": "right-align" },
                         ],
                         order: [
                           [1, "desc" ]
