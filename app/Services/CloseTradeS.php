@@ -48,17 +48,28 @@ class CloseTradeS
                 $details[] = $this->buildDetails($transactionAggregateE);
             }
 
-            $closedTradeE = $this->getClosedTradeR()->getEntity();
-            $closedTradeE = get_class($closedTradeE);
-            $closedTradeE = new $closedTradeE();
+            /** @var ClosedTradeE $closedTradeE */
+            $closedTradeE = $this->getCloseTradeEntity();
 
             $this->populateClosedTradeE($closedTradeE, $collection, $details);
 
-            $closedTradeR = $this->getClosedTradeR();
-            $closedTradeR->persistEntity($closedTradeE);
+            $this->getClosedTradeR()
+                ->persistEntity($closedTradeE);
         });
 
         return $this;
+    }
+
+    /**
+     * @return \App\Entities\BaseEntity|string
+     */
+    public function getCloseTradeEntity()
+    {
+        $closedTradeE = $this->getClosedTradeR()->getEntity();
+//        $closedTradeE = get_class($closedTradeE);
+        $closedTradeE = new $closedTradeE();
+
+        return $closedTradeE;
     }
 
     /**

@@ -77,16 +77,16 @@
                             },
                             { data: 0 },
                             { data: 1 },
-                            { data: 2, "class": "right-align" },
+                            { data: 2, "class": "right-aligit gn" },
                         ],
                         order: [
                           [1, "desc" ]
                         ],
                         // print, copy and excel buttons
-                        dom: 'lftiprB',
-                        buttons: [
-                            'print','copy', 'excel', 'csv'
-                        ],
+//                        dom: 'lftiprB',
+//                        buttons: [
+//                            'print','copy', 'excel', 'csv'
+//                        ],
                         // display totals in the footer row.
                         "footerCallback": function ( row, data, start, end, display ) {
                             let api = this.api();
