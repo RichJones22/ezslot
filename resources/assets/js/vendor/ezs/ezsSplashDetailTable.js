@@ -40,7 +40,13 @@ ezsNS.ezSlot.SplashDetailTable = {
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_side);
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].option_quantity  + "&nbsp","right-align");
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,response.data[i].strike_price  + "&nbsp","right-align");
-                    ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,ezsNS.ezSlot.SplashDetailTable.displayDollars(ezsNS.ezSlot.SplashDetailTable.ParseIntOrEmptyString(response.data[i].amount)) + "&nbsp", "right-align");
+
+
+                    if (response.data[i].amount === 0) {
+                        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr, "--Expired--" + "&nbsp", "right-align");
+                    } else {
+                        ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,ezsNS.ezSlot.SplashDetailTable.displayDollars(ezsNS.ezSlot.SplashDetailTable.ParseIntOrEmptyString(response.data[i].amount)) + "&nbsp", "right-align");
+                    }
 
                     let value = ezsNS.ezSlot.SplashDetailTable.ParseIntOrEmptyString(response.data[i].profits);
                     ezsNS.ezSlot.SplashDetailTable.tblDetail(table,tr,value !== "" ? ezsNS.ezSlot.SplashDetailTable.displayDollars(value) + "&nbsp" : value + "&nbsp", "right-align");

@@ -240,10 +240,13 @@ class TransactionAggregateS
                 if ($count->count > 1) {
                     // consolidate the group
                     $pos = $iterator->key();
-                    list($transactions, $advance) = $this->consolidateGroup(Collect($transactions), $iterator->current());
 
-                    if ( ! ($pos + $advance >= $iterator->count())) {
-                        $iterator->seek($pos + $advance);
+                    if ($pos <= $iterator->count()) {
+                        list($transactions, $advance) = $this->consolidateGroup(Collect($transactions), $iterator->current());
+
+                        if ( ! ($pos + $advance >= $iterator->count())) {
+                            $iterator->seek($pos + $advance);
+                        }
                     }
 
                     break;
@@ -271,16 +274,31 @@ class TransactionAggregateS
     protected function consolidateGroup(Collection $transactions, TransactionAggregateE $transaction): array
     {
         // pull out the group.
-        $toSum = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
-            if ($x->getCloseDate() === $transaction->getCloseDate() &&
-                $x->getUnderlierSymbol() === $transaction->getUnderlierSymbol() &&
-                $x->getOptionSide() === $transaction->getOptionSide()
-            ) {
-                return $x;
-            }
 
-            return false;
-        });
+        // check if we have an expired option
+        if ($transaction->getTradeType() === 'Option Expiration') {
+            $toSum = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getSymbol() === $transaction->getSymbol() &&
+                    $x->getUnderlierSymbol() === $transaction->getUnderlierSymbol() &&
+                    $x->getOptionSide() === $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
+
+                return false;
+            });
+        } else {
+            $toSum = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getCloseDate() === $transaction->getCloseDate() &&
+                    $x->getUnderlierSymbol() === $transaction->getUnderlierSymbol() &&
+                    $x->getOptionSide() === $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
+
+                return false;
+            });
+        }
 
         // number to advance for the calling iterator
         $iteratorCount = $toSum->count();
@@ -302,16 +320,29 @@ class TransactionAggregateS
         $toAddBack->setOptionQuantity($sumQuantity);
 
         // remove the group from the array
-        $newArray = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
-            if ($x->getCloseDate() !== $transaction->getCloseDate() ||
-                $x->getUnderlierSymbol() !== $transaction->getUnderlierSymbol() ||
-                $x->getOptionSide() !== $transaction->getOptionSide()
-            ) {
-                return $x;
-            }
+        if ($transaction->getTradeType() === 'Option Expiration') {
+            $newArray = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getSymbol() !== $transaction->getSymbol() ||
+                    $x->getUnderlierSymbol() !== $transaction->getUnderlierSymbol() ||
+                    $x->getOptionSide() !== $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
 
-            return false;
-        });
+                return false;
+            });
+        } else {
+            $newArray = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getCloseDate() !== $transaction->getCloseDate() ||
+                    $x->getUnderlierSymbol() !== $transaction->getUnderlierSymbol() ||
+                    $x->getOptionSide() !== $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
+
+                return false;
+            });
+        }
 
         // get array position
         $pos = $toSum->keys()->first();
