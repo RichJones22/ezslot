@@ -82,6 +82,7 @@
                         order: [
                           [1, "desc" ]
                         ],
+                        "iDisplayLength": 25,
                         // print, copy and excel buttons
 //                        dom: 'lftiprB',
 //                        buttons: [

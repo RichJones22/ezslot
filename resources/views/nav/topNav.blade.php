@@ -20,12 +20,12 @@
                 <li class="page-scroll">
                     <a href="#contact">Alerts</a>
                 </li>
-                <li class="page-scroll">
-                    <a href="{{ url('/login') }}">Login</a>
-                </li>
-                <li class="page-scroll">
-                    <a href="{{ url('/register') }}">Register</a>
-                </li>
+                {{--<li class="page-scroll">--}}
+                    {{--<a href="{{ url('/login') }}">Login</a>--}}
+                {{--</li>--}}
+                {{--<li class="page-scroll">--}}
+                    {{--<a href="{{ url('/register') }}">Register</a>--}}
+                {{--</li>--}}
             </ul>
         </div>
         <!-- /.navbar-collapse -->

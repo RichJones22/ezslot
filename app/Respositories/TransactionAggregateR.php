@@ -21,6 +21,8 @@ class TransactionAggregateR
      */
     private $tradeWhere = ['Trade'];
 
+    private $optionType = ['PUT'];
+
     /**
      * @var string
      */
@@ -80,12 +82,13 @@ class TransactionAggregateR
                 'symbol',
                 'transaction_id')
             ->whereIn('trade_type', $this->tradeWhere)
+            ->whereIn('option_type', $this->optionType)
             ->where('underlier_symbol', $symbol)
             ->where('security_type', 'OPTION')
             ->where('close_date', '>', $this->fromDate)
-            ->orderBy('close_date', 'desc')
-//            ->orderBy('option_side', 'asc')
-//            ->orderBy('expiration', 'asc')
+            ->orderBy('close_date', 'asc')
+            ->orderBy('expiration', 'asc')
+            ->orderBy('option_side', 'desc')
             ->get();
 
         // derive TransactionAggregateE collection
@@ -121,6 +124,7 @@ class TransactionAggregateR
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
             ->whereIn('trade_type', $this->tradeWhere)
+            ->whereIn('option_type', $this->optionType)
             ->where('expiration', $aggregateE->getExpiration())
             ->where('underlier_symbol', $aggregateE->getUnderlierSymbol())
             ->where('security_type', 'OPTION')
@@ -138,6 +142,7 @@ class TransactionAggregateR
     {
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
+            ->whereIn('option_type', $this->optionType)
             ->where('expiration', $aggregateE->getExpiration())
             ->where('underlier_symbol', $aggregateE->getUnderlierSymbol())
             ->where('option_side', $aggregateE->getOptionSide())
@@ -156,6 +161,7 @@ class TransactionAggregateR
     {
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
+            ->whereIn('option_type', $this->optionType)
             ->where('close_date', $aggregateE->getCloseDate())
             ->where('underlier_symbol', $aggregateE->getUnderlierSymbol())
             ->where('option_side', 'SELL')
@@ -175,8 +181,8 @@ class TransactionAggregateR
     {
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
+            ->whereIn('option_type', $this->optionType)
             ->where('symbol', $aggregateE->getSymbol())
-//                ->where('close_date', $aggregateE->getCloseDate())
             ->where('security_type', 'OPTION')
             ->whereIn('trade_type', $this->tradeWhere)
             ->get();
@@ -192,6 +198,7 @@ class TransactionAggregateR
         $collection = DB::table('options_house_transaction')
             ->select('underlier_symbol', 'security_description')
             ->groupBy('underlier_symbol', 'security_description')
+            ->whereIn('option_type', $this->optionType)
             ->where('underlier_symbol', '<>', '')
             ->where('close_date', '>', $this->fromDate)
             ->get()

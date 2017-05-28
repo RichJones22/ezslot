@@ -177,10 +177,12 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
         Laravel\Spark\Providers\SparkServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         App\Providers\SparkServiceProvider::class,
+
+        // place the RouteServiceProvider after the SparkServiceProvider, allows for ez spark route suppression.
+        App\Providers\RouteServiceProvider::class,
 
         \App\Providers\ezSlotServiceProvider::class,
         Appointer\Swaggervel\SwaggervelServiceProvider::class,
