@@ -46,6 +46,7 @@
         "app_setup": [
             "composer dumpautoload -o",
             "php artisan swagger:generate-docs",
+            "php artisan optionsHouse:get-activity",
             "php artisan clear-compiled",
             "php artisan cache:clear",
             "php artisan view:clear",
