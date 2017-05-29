@@ -35,16 +35,17 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
+// not using vue resources as they have been deprecated..
 // Vue.http.interceptors.push((request, next) => {
 //     request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
 //
 //     next();
 // });
 
-// window.axios.defaults.headers.common = {
-//     'X-CSRF-TOKEN': window.Laravel.csrfToken,
-//     'X-Requested-With': 'XMLHttpRequest'
-// };
+window.axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest'
+};
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

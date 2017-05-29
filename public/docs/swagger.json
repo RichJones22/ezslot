@@ -20,14 +20,30 @@
                 ]
             }
         },
-        "/testPopulateSymbolsTable": {
+        "/api/getTradeDetails": {
             "get": {
                 "tags": [
-                    "Tests"
+                    "Closed Trades"
                 ],
-                "summary": "test the Symbols->PopulateSymbolsTable() method",
+                "summary": "derives trade details for a given closed trade",
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "close_date",
+                        "in": "query",
+                        "description": "date the trade closed, ie: YYYY-MM-DD format",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "symbol",
+                        "in": "query",
+                        "description": "ticker symbol, ie: IBM",
+                        "required": true,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {

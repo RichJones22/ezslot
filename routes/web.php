@@ -11,6 +11,14 @@
 |
 */
 
+// spark '/login' and '/register' are suppressed for first deploy.
+Route::get( '/login', function() {
+    return view('splash');
+});
+Route::get( '/register', function() {
+    return view('splash');
+});
+
 
 Route::get('/', function () {
     return view('splash');
@@ -30,6 +38,8 @@ Route::get('/home', 'HomeController@show');
 Route::get('/testSymbolsUnique','SymbolsController@testSymbolsUnique');
 Route::get('/testPopulateSymbolsTable','SymbolsController@testPopulateSymbolsTable');
 
+Route::post('/welcomeEmail', 'EmailController@welcomeEmail');
+Route::get('/getAllWelcomeEmailLeads', 'EmailController@getAllWelcomeEmailLeads');
 
 /*
  * --------------------------------------------------------------------------------------------------------------------

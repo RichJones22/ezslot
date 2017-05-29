@@ -33,6 +33,8 @@ class TransactionAggregateE
     private $amount;
     /** @var string */
     private $symbol;
+    /** @var string */
+    private $trade_type;
     /** @var int */
     private $transaction_id;
 
@@ -318,6 +320,26 @@ class TransactionAggregateE
     public function setTradeClosed(bool $tradeClosed): TransactionAggregateE
     {
         $this->tradeClosed = $tradeClosed;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTradeType(): string
+    {
+        return $this->trade_type;
+    }
+
+    /**
+     * @param string $trade_type
+     *
+     * @return TransactionAggregateE
+     */
+    public function setTradeType(string $trade_type): TransactionAggregateE
+    {
+        $this->trade_type = $trade_type;
 
         return $this;
     }
