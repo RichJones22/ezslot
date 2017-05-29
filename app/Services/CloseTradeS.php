@@ -42,23 +42,29 @@ class CloseTradeS
         }
 
         DB::Transaction(function () use ($collection) {
-            $details = [];
+            // build details array
+            $details = $this->buildTradeDetails($collection);
 
-            foreach ($collection as $transactionAggregateE) {
-                $details[] = $this->buildDetails($transactionAggregateE);
-            }
+            /** @var ClosedTradeE $closedTradeE */
+            $closedTradeE = $this->getCloseTradeEntity();
 
-            $closedTradeE = $this->getClosedTradeR()->getEntity();
-            $closedTradeE = get_class($closedTradeE);
-            $closedTradeE = new $closedTradeE();
-
+            // populate and persist the closedTradeE entity.
             $this->populateClosedTradeE($closedTradeE, $collection, $details);
-
-            $closedTradeR = $this->getClosedTradeR();
-            $closedTradeR->persistEntity($closedTradeE);
+            $this->getClosedTradeR()->persistEntity($closedTradeE);
         });
 
         return $this;
+    }
+
+    /**
+     * @return \App\Entities\BaseEntity|string
+     */
+    public function getCloseTradeEntity()
+    {
+        $closedTradeE = $this->getClosedTradeR()->getEntity();
+        $closedTradeE = new $closedTradeE();
+
+        return $closedTradeE;
     }
 
     /**
@@ -105,6 +111,46 @@ class CloseTradeS
     }
 
     /**
+     * @param $collection
+     *
+     * @return array
+     */
+    public function buildTradeDetails(Collection $collection): array
+    {
+        $details = [];
+
+        $collectionCount = count($collection);
+
+        for ($i = 0; $i < $collectionCount; ++$i) {
+            /** @var TransactionAggregateE $transactionAggregateE */
+            $transactionAggregateE = $collection[$i];
+
+            if ($i === 0) {
+                $profits = $collection[$i]->getAmount();
+                $transactionAggregateE->setProfits($profits);
+            } else {
+                if ($collection[$i]->getOptionSide() === 'SELL') {
+                    if ($collection[$i - 1]->getOptionSide() === 'BUY') {
+                        $profits = $collection[$i]->getAmount() + $collection[$i - 1]->getAmount();
+                        $transactionAggregateE->setProfits($profits);
+                    }
+                }
+            }
+
+            // prevent total profits from being counted twice
+            if ($i === $collectionCount - 1) {
+                if ($collection[$i]->getOptionSide() === 'BUY') {
+                    $transactionAggregateE->setProfits($collection[$i]->getAmount());
+                }
+            }
+
+            $details[] = $this->buildDetailsArray($transactionAggregateE);
+        }
+
+        return $details;
+    }
+
+    /**
      * @param ClosedTradeE $closedTradeE
      * @param Collection   $collection
      * @param array        $details
@@ -127,7 +173,7 @@ class CloseTradeS
      *
      * @return array
      */
-    protected function buildDetails(TransactionAggregateE $transactionAggregateE)
+    protected function buildDetailsArray(TransactionAggregateE $transactionAggregateE)
     {
         return [
             'close_date' => $transactionAggregateE->getCloseDate(),

@@ -8,6 +8,15 @@
 
     <title>ezSlot</title>
     <link href="{{mix('css/ezSlot.css')}}" rel="stylesheet">
+
+    <!-- Global csrfToken -->
+    <script>
+        let tmpToken = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+
+        window.Laravel = tmpToken;
+    </script>
 </head>
 <body id="page-top" class="index">
 
@@ -15,7 +24,9 @@
 @include('nav.topNav')
 
 <!-- page content -->
-@yield('content')
+<div id="vueAppScope">
+    @yield('content')
+</div>
 
 <!-- site footer -->
 @include('footer.appFooter')

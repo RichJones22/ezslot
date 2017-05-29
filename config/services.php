@@ -34,5 +34,8 @@ return [
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'sparkpost' => [
+        'secret' => env('SPARK_POST_API_KEY'),
+    ],
 
 ];

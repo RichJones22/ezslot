@@ -8,6 +8,7 @@ use App\Entities\TransactionAggregateE;
 use App\Repositories\SymbolsE;
 use App\Repositories\SymbolsR;
 use App\Repositories\TransactionAggregateR;
+use ArrayObject;
 use DB;
 use Illuminate\Support\Collection;
 use Premise\Utilities\DateTime\CurrentDateTime;
@@ -227,21 +228,35 @@ class TransactionAggregateS
      */
     protected function consolidateTransactions(Collection $transactions): Collection
     {
-        foreach ($transactions as $transaction) {
-            $counts = $this->aggregateR->findGroups($transaction);
+        $transactions = new ArrayObject($transactions->all());
+
+        $iterator = $transactions->getIterator();
+
+        while ($iterator->valid()) {
+            $counts = $this->aggregateR->findGroups($iterator->current());
 
             foreach ($counts as $count) {
                 // check if we have a group to consolidate
                 if ($count->count > 1) {
                     // consolidate the group
-                    $transactions = $this->consolidateGroup($transactions, $transaction);
+                    $pos = $iterator->key();
+
+                    if ($pos <= $iterator->count()) {
+                        list($transactions, $advance) = $this->consolidateGroup(Collect($transactions), $iterator->current());
+
+                        if ( ! ($pos + $advance >= $iterator->count())) {
+                            $iterator->seek($pos + $advance);
+                        }
+                    }
 
                     break;
                 }
             }
+
+            $iterator->next();
         }
 
-        return $transactions->sort();
+        return Collect($transactions);
     }
 
     /**
@@ -254,21 +269,39 @@ class TransactionAggregateS
      * @param Collection $transactions
      * @param $transaction
      *
-     * @return Collection
+     * @return array
      */
-    protected function consolidateGroup(Collection $transactions, TransactionAggregateE $transaction): Collection
+    protected function consolidateGroup(Collection $transactions, TransactionAggregateE $transaction): array
     {
         // pull out the group.
-        $toSum = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
-            if ($x->getCloseDate() === $transaction->getCloseDate() &&
-                $x->getUnderlierSymbol() === $transaction->getUnderlierSymbol() &&
-                $x->getOptionSide() === $transaction->getOptionSide()
-            ) {
-                return $x;
-            }
 
-            return false;
-        });
+        // check if we have an expired option
+        if ($transaction->getTradeType() === 'Option Expiration') {
+            $toSum = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getSymbol() === $transaction->getSymbol() &&
+                    $x->getUnderlierSymbol() === $transaction->getUnderlierSymbol() &&
+                    $x->getOptionSide() === $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
+
+                return false;
+            });
+        } else {
+            $toSum = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getCloseDate() === $transaction->getCloseDate() &&
+                    $x->getUnderlierSymbol() === $transaction->getUnderlierSymbol() &&
+                    $x->getOptionSide() === $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
+
+                return false;
+            });
+        }
+
+        // number to advance for the calling iterator
+        $iteratorCount = $toSum->count();
 
         // sum the amounts
         $sumAmount = $toSum->reduce(function ($carry, TransactionAggregateE $item) {
@@ -287,62 +320,76 @@ class TransactionAggregateS
         $toAddBack->setOptionQuantity($sumQuantity);
 
         // remove the group from the array
-        $newArray = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
-            if ($x->getCloseDate() !== $transaction->getCloseDate() ||
-                $x->getUnderlierSymbol() !== $transaction->getUnderlierSymbol() ||
-                $x->getOptionSide() !== $transaction->getOptionSide()
-            ) {
-                return $x;
-            }
+        if ($transaction->getTradeType() === 'Option Expiration') {
+            $newArray = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getSymbol() !== $transaction->getSymbol() ||
+                    $x->getUnderlierSymbol() !== $transaction->getUnderlierSymbol() ||
+                    $x->getOptionSide() !== $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
 
-            return false;
-        });
+                return false;
+            });
+        } else {
+            $newArray = $transactions->filter(function (TransactionAggregateE $x) use ($transaction) {
+                if ($x->getCloseDate() !== $transaction->getCloseDate() ||
+                    $x->getUnderlierSymbol() !== $transaction->getUnderlierSymbol() ||
+                    $x->getOptionSide() !== $transaction->getOptionSide()
+                ) {
+                    return $x;
+                }
+
+                return false;
+            });
+        }
+
+        // get array position
+        $pos = $toSum->keys()->first();
 
         // add the summed element back to the array
-        $newArray[] = $toAddBack;
+        $newArray->put($pos, $toAddBack);
 
         // sort the array.
-        $transactions = $newArray->sort();
+        $transactions = $newArray->all();
+        ksort($transactions);
 
-        return $transactions;
+        return [$transactions, $iteratorCount];
     }
 
     /**
      * @param Collection $transactions
-     * @param $tradeProfit
      *
      * @return Collection
      */
-    protected function determineTradeProfits(Collection $transactions, $tradeProfit): Collection
+    protected function determineTradeProfits(Collection $transactions): Collection
     {
+        $tradeProfit = 0;
+
         /** @var CloseTradeS $service */
         $closeTradeS = $this->getCloseTradeS();
         /** @var Collection $closedTradesColl */
         $closedTradesColl = $closeTradeS->getClosedTradeR()->getCollection();
         $closedTradesColl = new $closedTradesColl();
 
-        $count = $transactions->count();
-        $i = 0;
         /** @var TransactionAggregateE $transaction */
         foreach ($transactions as $transaction) {
             $tradeProfit += $transaction->getAmount();
             $transaction->setTradeClosed(false);
 
-            if ($this->didTradeEnd($transaction, $count, $i)) {
-                $transaction->setProfits($tradeProfit);
-                $tradeProfit = 0;
+            if ($this->didTradeEnd($transaction)) {
                 $this->setTradeCloseValue($transaction);
                 $closedTradesColl->push($transaction);
 
-                if ($transaction->getTradeClosed()) {
-                    $closeTradeS->persist($closedTradesColl);
-                }
+                $closeTradeS->persist($closedTradesColl);
+
+                $transaction->setProfits($tradeProfit);
+                $tradeProfit = 0;
                 $closedTradesColl = new $closedTradesColl();
             } else {
                 $transaction->setProfits(0);
                 $closedTradesColl->push($transaction);
             }
-            ++$i;
         }
 
         return $transactions;
@@ -350,12 +397,10 @@ class TransactionAggregateS
 
     /**
      * @param TransactionAggregateE $aggregateE
-     * @param $count
-     * @param $i
      *
      * @return bool
      */
-    protected function didTradeEnd(TransactionAggregateE $aggregateE, $count, $i): bool
+    protected function didTradeEnd(TransactionAggregateE $aggregateE): bool
     {
         // determine if trade has ended.
         if ($aggregateE->getOptionSide() === 'BUY') {
@@ -366,18 +411,20 @@ class TransactionAggregateS
                     return true;
                 }
             }
-        } elseif ($aggregateE->getOptionSide() === 'SELL') {
-            if ($count !== $i) {
-                $counts = $this->aggregateR->findTrades($aggregateE);
 
-                foreach ($counts as $count) {
-                    if (CurrentDateTime::new()->currentDate() > $aggregateE->getExpiration()) {
-                        if ($count->count === 1) {
-                            return true;
-                        }
-                    }
-                }
-            }
+            //  TODO: below has to do with being assigned... handle this separately...
+//        } elseif ($aggregateE->getOptionSide() === 'SELL') {
+//            if ($count !== $i) {
+//                $counts = $this->aggregateR->findTrades($aggregateE);
+//
+//                foreach ($counts as $count) {
+//                    if (CurrentDateTime::new()->currentDate() > $aggregateE->getExpiration()) {
+//                        if ($count->count === 1) {
+//                            return true;
+//                        }
+//                    }
+//                }
+//            }
         }
 
         return false;
@@ -390,8 +437,6 @@ class TransactionAggregateS
      */
     protected function getBySymbolTransaction($symbol): Collection
     {
-        $tradeProfit = 0;
-
         // get all trades by symbol
         $CollectionAggregateE = $this
             ->aggregateR
@@ -405,7 +450,7 @@ class TransactionAggregateS
 
         // calculate trade breaks and profits per trade
         /* @var TransactionAggregateE $transaction */
-        $this->determineTradeProfits($transactions, $tradeProfit);
+        $this->determineTradeProfits($transactions);
 
         return $transactions;
     }
