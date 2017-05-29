@@ -82,11 +82,12 @@
                         order: [
                           [1, "desc" ]
                         ],
+                        "iDisplayLength": 25,
                         // print, copy and excel buttons
-                        dom: 'lftiprB',
-                        buttons: [
-                            'print','copy', 'excel', 'csv'
-                        ],
+//                        dom: 'lftiprB',
+//                        buttons: [
+//                            'print','copy', 'excel', 'csv'
+//                        ],
                         // display totals in the footer row.
                         "footerCallback": function ( row, data, start, end, display ) {
                             let api = this.api();

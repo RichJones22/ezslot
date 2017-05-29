@@ -19,7 +19,11 @@ class TransactionAggregateR
     /**
      * @var array
      */
-    private $tradeWhere = ['Trade'];
+    private $tradeWhere = ['Trade', 'Option Expiration'];
+
+    private $optionType = ['PUT'];
+
+    private $securityType = ['Option'];
 
     /**
      * @var string
@@ -78,14 +82,16 @@ class TransactionAggregateR
                 'expiration',
                 'amount',
                 'symbol',
+                'trade_type',
                 'transaction_id')
             ->whereIn('trade_type', $this->tradeWhere)
+            ->whereIn('option_type', $this->optionType)
             ->where('underlier_symbol', $symbol)
-            ->where('security_type', 'OPTION')
+            ->where('security_type', $this->securityType)
             ->where('close_date', '>', $this->fromDate)
-            ->orderBy('close_date', 'desc')
-//            ->orderBy('option_side', 'asc')
-//            ->orderBy('expiration', 'asc')
+            ->orderBy('close_date', 'asc')
+            ->orderBy('expiration', 'asc')
+            ->orderBy('option_side', 'desc')
             ->get();
 
         // derive TransactionAggregateE collection
@@ -121,6 +127,7 @@ class TransactionAggregateR
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
             ->whereIn('trade_type', $this->tradeWhere)
+            ->whereIn('option_type', $this->optionType)
             ->where('expiration', $aggregateE->getExpiration())
             ->where('underlier_symbol', $aggregateE->getUnderlierSymbol())
             ->where('security_type', 'OPTION')
@@ -136,13 +143,26 @@ class TransactionAggregateR
      */
     public function findGroups(TransactionAggregateE $aggregateE): Collection
     {
-        $counts = DB::table('options_house_transaction')
-            ->select(DB::raw('count(*) as count'))
-            ->where('expiration', $aggregateE->getExpiration())
-            ->where('underlier_symbol', $aggregateE->getUnderlierSymbol())
-            ->where('option_side', $aggregateE->getOptionSide())
-            ->where('security_type', 'OPTION')
-            ->get();
+        if ($aggregateE->getTradeType() === 'Option Expiration') {
+            $counts = DB::table('options_house_transaction')
+                ->select(DB::raw('count(*) as count'))
+                ->whereIn('option_type', $this->optionType)
+                ->whereIn('trade_type', $this->tradeWhere)
+                ->where('symbol', $aggregateE->getSymbol())
+                ->where('option_side', $aggregateE->getOptionSide())
+                ->where('position_state', $aggregateE->getPositionState())
+                ->where('security_type', $this->securityType)
+                ->get();
+        } else {
+            $counts = DB::table('options_house_transaction')
+                ->select(DB::raw('count(*) as count'))
+                ->whereIn('option_type', $this->optionType)
+                ->where('expiration', $aggregateE->getExpiration())
+                ->where('underlier_symbol', $aggregateE->getUnderlierSymbol())
+                ->where('option_side', $aggregateE->getOptionSide())
+                ->where('security_type', 'OPTION')
+                ->get();
+        }
 
         return $counts;
     }
@@ -156,6 +176,7 @@ class TransactionAggregateR
     {
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
+            ->whereIn('option_type', $this->optionType)
             ->where('close_date', $aggregateE->getCloseDate())
             ->where('underlier_symbol', $aggregateE->getUnderlierSymbol())
             ->where('option_side', 'SELL')
@@ -175,8 +196,8 @@ class TransactionAggregateR
     {
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
+            ->whereIn('option_type', $this->optionType)
             ->where('symbol', $aggregateE->getSymbol())
-//                ->where('close_date', $aggregateE->getCloseDate())
             ->where('security_type', 'OPTION')
             ->whereIn('trade_type', $this->tradeWhere)
             ->get();
@@ -192,6 +213,7 @@ class TransactionAggregateR
         $collection = DB::table('options_house_transaction')
             ->select('underlier_symbol', 'security_description')
             ->groupBy('underlier_symbol', 'security_description')
+            ->whereIn('option_type', $this->optionType)
             ->where('underlier_symbol', '<>', '')
             ->where('close_date', '>', $this->fromDate)
             ->get()
