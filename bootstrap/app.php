@@ -52,4 +52,9 @@ $app->singleton(
 |
 */
 
+// add paper trail handler
+$app->configureMonologUsing(function($monolog){
+    $monolog->pushHandler(new Monolog\Handler\SyslogHandler('papertrail'));
+});
+
 return $app;
