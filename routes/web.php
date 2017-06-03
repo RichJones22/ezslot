@@ -23,7 +23,12 @@ Route::get( '/register', function() {
 Route::get('/', function () {
     return view('splash');
 });
-//
+
+Route::get('/errorThis', function(){
+   throw new Exception('testing if errors are coming through...');
+});
+
+
 Route::get('/home', 'HomeController@show');
 
 
