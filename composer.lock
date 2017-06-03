@@ -1896,12 +1896,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RichJones22/utilities.git",
-                "reference": "fcbd2553736b7ae5e8fe90ddac58388885d0d4d0"
+                "reference": "87ce6dd145ab3990afdd5cbb523f0392f7e50a4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RichJones22/utilities/zipball/fcbd2553736b7ae5e8fe90ddac58388885d0d4d0",
-                "reference": "fcbd2553736b7ae5e8fe90ddac58388885d0d4d0",
+                "url": "https://api.github.com/repos/RichJones22/utilities/zipball/87ce6dd145ab3990afdd5cbb523f0392f7e50a4f",
+                "reference": "87ce6dd145ab3990afdd5cbb523f0392f7e50a4f",
                 "shasum": ""
             },
             "require": {
@@ -1915,7 +1915,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2017-01-14T14:50:09+00:00"
+            "time": "2017-06-03T16:50:05+00:00"
         },
         {
             "name": "psr/http-message",
