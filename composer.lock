@@ -2129,12 +2129,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RichJones22/utilities.git",
-                "reference": "87ce6dd145ab3990afdd5cbb523f0392f7e50a4f"
+                "reference": "dd4133ceae8be9844d059c3fe51332a0c384d6b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RichJones22/utilities/zipball/87ce6dd145ab3990afdd5cbb523f0392f7e50a4f",
-                "reference": "87ce6dd145ab3990afdd5cbb523f0392f7e50a4f",
+                "url": "https://api.github.com/repos/RichJones22/utilities/zipball/dd4133ceae8be9844d059c3fe51332a0c384d6b7",
+                "reference": "dd4133ceae8be9844d059c3fe51332a0c384d6b7",
                 "shasum": ""
             },
             "require": {
@@ -2148,7 +2148,19 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2017-06-03T16:50:05+00:00"
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rich Jones",
+                    "email": "jones_rich@yahoo.com",
+                    "homepage": "http://www.premisesoftware.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "General utilities for all; but, primarily for Premise Software Solutions...",
+            "time": "2017-06-04T21:51:42+00:00"
         },
         {
             "name": "psr/http-message",
@@ -2249,16 +2261,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.5",
+            "version": "v0.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "38a9d21406597a0440690eafbcb0222f528c8ac6"
+                "reference": "7028d6d525fb183d50b249b7c07598e3d386b27d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/38a9d21406597a0440690eafbcb0222f528c8ac6",
-                "reference": "38a9d21406597a0440690eafbcb0222f528c8ac6",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/7028d6d525fb183d50b249b7c07598e3d386b27d",
+                "reference": "7028d6d525fb183d50b249b7c07598e3d386b27d",
                 "shasum": ""
             },
             "require": {
@@ -2288,7 +2300,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.9.x-dev"
+                    "dev-develop": "0.8.x-dev"
                 }
             },
             "autoload": {
@@ -2318,7 +2330,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-05-17T06:49:19+00:00"
+            "time": "2017-06-04T10:34:20+00:00"
         },
         {
             "name": "ramsey/uuid",
