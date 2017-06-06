@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "24c5fa40b69162b123f283694142d35a",
+    "content-hash": "937f650b5e46e0c09503e20f6f6178b8",
     "packages": [
         {
             "name": "appointer/swaggervel",
@@ -884,6 +884,44 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2016-07-18T04:51:16+00:00"
+        },
+        {
+            "name": "genealabs/laravel-caffeine",
+            "version": "0.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GeneaLabs/laravel-caffeine.git",
+                "reference": "19c956b2194da73233b9f36eec77e3ca1848b3bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GeneaLabs/laravel-caffeine/zipball/19c956b2194da73233b9f36eec77e3ca1848b3bf",
+                "reference": "19c956b2194da73233b9f36eec77e3ca1848b3bf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "5.1.* || 5.3.* || 5.4.*",
+                "illuminate/support": "5.1.* || 5.3.* || 5.4.*",
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GeneaLabs\\LaravelCaffeine\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Bronner",
+                    "email": "hello@genealabs.com"
+                }
+            ],
+            "description": "Keeping Your Laravel Forms Awake",
+            "time": "2017-02-03T03:08:44+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
