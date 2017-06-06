@@ -12,7 +12,7 @@
     <!-- Global csrfToken -->
     <script>
         let tmpToken = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
+            '_token' => csrf_token(),
         ]); ?>
 
         window.Laravel = tmpToken;
