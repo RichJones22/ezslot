@@ -79,7 +79,12 @@
                             }
                             let local = getErrorLocation();
                             let msg = local.stack;
-                            sweet(error.message, msg, "error");
+//                            sweet(error.message, msg, "error");
+                            sweet(
+                                'Oops...',
+                                'I think that refreshing your browser should fix this...',
+                                'error'
+                            );
                         }
                     })
                 ;
