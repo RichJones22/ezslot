@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    &copy; Copyright 2008-
+                    &copy; Copyright 2008 -
                     <script language="JavaScript" type="text/javascript">
                         let now = new Date;
                         theYear=now.getYear();
