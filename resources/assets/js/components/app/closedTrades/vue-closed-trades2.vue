@@ -1,6 +1,7 @@
 <template>
     <div class="m-table">
-        <table id="example" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+        <!--<table id="example" class="table table-striped table-bordered responsive display" cellspacing="0" width="100%">-->
+        <table id="example" class="display responsive table-striped" width="100%">
             <thead>
                 <tr>
                     <th></th>
@@ -23,6 +24,9 @@
         border: hidden;
         border-radius: 3rem;
         background-color: #a2a2a2;
+        /*font-family: 'Courier New', Courier, monospace;*/
+
+
     }
     th {
         white-space: nowrap;
@@ -70,7 +74,7 @@
                         autoWidth: false,     // allow container styling to work.
                         columns: [
                             {
-                                "className":      'details-control',
+                                "className":      'min-tablet details-control',
                                 "orderable":      false,
                                 "data":           null,
                                 "defaultContent": ''
@@ -79,6 +83,9 @@
                             { data: 1 },
                             { data: 2, "class": "right-align" },
                         ],
+                        responsive: {
+                            details: false
+                        },
                         order: [
                           [1, "desc" ]
                         ],
