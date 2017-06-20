@@ -8,6 +8,8 @@
 
     <title>ezSlot</title>
     <link href="{{mix('css/ezSlot.css')}}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet">
+    {{--<link href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" rel="stylesheet">--}}
 
     <!-- Global csrfToken -->
     <script>
@@ -32,6 +34,8 @@
 @include('footer.appFooter')
 
 <script src="{{mix('js/ezSlot.js')}}"></script>
+<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
 
 </body>
 
