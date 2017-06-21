@@ -53,21 +53,19 @@ class EmailController extends Controller
      */
     public function welcomeEmail(WelcomeEmailRequest $request)
     {
-        return view('/');
-
         // save the email address to db
-//        $this->getWelcomeEmailLeadsS()
-//            ->persistEmail($request);
-//
-//        // build welcome email
-//        $welcomeEmail = $this->buildWelcomeEmail();
-//
-//        // send/queue the email
-//        $this->getMailer()
-//            ->to($request->get('email'))
-//            ->queue($welcomeEmail);
-//
-//        return redirect()->back();
+        $this->getWelcomeEmailLeadsS()
+            ->persistEmail($request);
+
+        // build welcome email
+        $welcomeEmail = $this->buildWelcomeEmail();
+
+        // send/queue the email
+        $this->getMailer()
+            ->to($request->get('email'))
+            ->queue($welcomeEmail);
+
+        return redirect()->back();
     }
 
     /**
