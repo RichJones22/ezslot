@@ -182,7 +182,7 @@ class EmailController extends Controller
     {
         /** @var Welcome $welcomeEmail */
         $welcomeEmail = $this->getWelcomeEmail();
-        $welcomeEmail->setFromEmailAddress('noreply@swinglowoptiontrading.com', 'NoReply');
+        $welcomeEmail->setFromEmailAddress(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
 
         return $welcomeEmail;
     }
