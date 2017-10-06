@@ -67,6 +67,7 @@ class GetOptionsHouseActivity extends Command
         if (empty($files)) {
             return $this;
         }
+        $bar = $this->output->createProgressBar(count($files));
 
         // bust the cache
         cache::forget('getAllPutTrades');
@@ -80,7 +81,12 @@ class GetOptionsHouseActivity extends Command
 
             // persist transactions to db.
             $this->persistTransactions($transactions);
+
+            $bar->advance();
         }
+
+        $bar->finish();
+        $this->line('');
 
         return $this;
     }
