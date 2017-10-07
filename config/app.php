@@ -187,7 +187,6 @@ return [
         \App\Providers\ezSlotServiceProvider::class,
         Appointer\Swaggervel\SwaggervelServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
-        GeneaLabs\LaravelCaffeine\Providers\LaravelCaffeineService::class,
 
     ],
 
