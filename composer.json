@@ -75,5 +75,12 @@
             "type": "composer",
             "url": "https://spark-satis.laravel.com"
         }
-    ]
+    ],
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "Laravel\\Dusk"
+            ]
+        }
+    }
 }
