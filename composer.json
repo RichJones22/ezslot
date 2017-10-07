@@ -79,7 +79,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "Laravel\\Dusk"
+                "laravel/dusk"
             ]
         }
     }
