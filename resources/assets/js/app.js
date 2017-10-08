@@ -18,6 +18,9 @@ require('spark-bootstrap');
 
 require('./components/bootstrap');
 
+// components that are used within the spark app area
+Vue.component('home', require('./components/app/home/home.vue'));
+
 var app = new Vue({
     mixins: [require('spark')]
 });
