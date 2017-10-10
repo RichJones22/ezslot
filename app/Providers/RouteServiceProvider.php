@@ -7,6 +7,9 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 
 class RouteServiceProvider extends ServiceProvider
 {
+    protected $APIRoutePath;
+    protected $WEBRoutePath;
+
     /**
      * This namespace is applied to your controller routes.
      *
@@ -23,8 +26,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
+        $this->APIRoutePath = base_path('routes/API');
+        $this->WEBRoutePath = base_path('routes/WEB');
         parent::boot();
     }
 
@@ -56,7 +59,11 @@ class RouteServiceProvider extends ServiceProvider
         $router->group([
             'namespace' => $this->namespace, 'middleware' => ['web', 'hasTeam'],
         ], function ($router) {
-            require base_path('routes/web.php');
+            $webRouteFiles = array_diff(scandir($this->WEBRoutePath), array('..', '.'));
+            foreach($webRouteFiles as $routeFile) {
+                $file = $this->WEBRoutePath.'/'. $routeFile;
+                require $file;
+            }
         });
     }
 
@@ -73,7 +80,11 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => 'api',
             'prefix' => 'api',
         ], function ($router) {
-            require base_path('routes/api.php');
+            $apiRouteFiles = array_diff(scandir($this->APIRoutePath), array('..', '.'));
+            foreach($apiRouteFiles as $routeFile) {
+                $file = $this->APIRoutePath.'/'. $routeFile;
+                require $file;
+            }
         });
     }
 }

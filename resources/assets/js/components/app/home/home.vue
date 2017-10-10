@@ -37,13 +37,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!--<div style="border: dashed;height: 100px;">-->
-
-                        <!--</div>-->
-                        <dropzone id="myVueDropzone" url="/foobar" v-on:vdropzone-success="showSuccess">
+                        <dropZone id="VueDropzone" url="/foobar" v-on:vdropzone-success="showSuccess">
                             <!-- Optional parameters if any! -->
                             <input type="hidden" name="token" value="xxx">
-                        </dropzone>
+                        </dropZone>
                     </div>
                 </div>
             </div>
@@ -52,7 +49,7 @@
 </template>
 <script>
 
-    let Dropzone = require('vue2-dropzone');
+    let dropZone = require('vue2-dropzone');
 
     export default {
         data(){
@@ -63,11 +60,12 @@
             console.log('home Component is ready.');
         },
         components: {
-            Dropzone
+            dropZone
         },
         methods: {
             'showSuccess': function (file) {
-                console.log('A file was successfully uploaded')
+                console.log('A file was successfully uploaded');
+                console.log(file);
             }
         },
         computed: {
